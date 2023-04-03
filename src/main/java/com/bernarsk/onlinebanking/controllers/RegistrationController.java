@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
+
 @Controller
 public class RegistrationController {
     @Autowired private UserRepository userRepository;
@@ -27,6 +29,9 @@ public class RegistrationController {
 ////            model.addAttribute("errorMessage", "Email address is already in use");
 ////            return "register";
 ////        }
+
+        // get account creation time
+        user.setDateCreated(LocalDate.now());
 
         // Save user to database
         userRepository.save(user);
