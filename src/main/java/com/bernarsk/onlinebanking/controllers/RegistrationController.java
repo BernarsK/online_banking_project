@@ -1,7 +1,7 @@
 package com.bernarsk.onlinebanking.controllers;
 
 import com.bernarsk.onlinebanking.models.User;
-import com.bernarsk.onlinebanking.repositories.UserRepository;
+import com.bernarsk.onlinebanking.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +13,8 @@ import java.time.LocalDate;
 
 @Controller
 public class RegistrationController {
-    @Autowired private UserRepository userRepository;
-
+    @Autowired
+    private RegistrationService userService;
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -23,12 +23,8 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String processRegistrationForm(@ModelAttribute("user") User user) {
-        // get account creation time
-        user.setDateCreated(LocalDate.now());
-
-        // Save user to database
-        userRepository.save(user);
-        // redirect
+        // call service class
+        userService.saveUser(user);
         return "redirect:/registration-success";
     }
 }
