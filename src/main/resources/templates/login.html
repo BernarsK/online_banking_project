@@ -24,11 +24,8 @@
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
-      <div class="error-message" th:if="${param.error}">
-        Invalid email and/or password.
-      </div>
-      <div th:if="${param.logout}">
-        You have been logged out.
+      <div th:if="${error}">
+        <p style="color: red" th:text="${error}"></p>
       </div>
     </form>
   </div>

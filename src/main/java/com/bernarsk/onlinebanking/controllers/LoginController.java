@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
@@ -26,13 +27,19 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user) {
+    public String login(Model model, @RequestParam String password, @RequestParam String email) {
+        User user = userRepository.findByEmail(email);
         // check if email exists
-        String email = user.getEmail();
         if (isEmailExists(email)) {
-            //
+            // if email is correct, check password
+            if (!user.getPassword().equals(password)) {
+                model.addAttribute("error", "Incorrect password");
+                return "login";
+            }
         } else {
-            //
+            // if email is not in database, return error
+            model.addAttribute("error", "Email address is not registered!");
+            return "login";
         }
         return "redirect:/login-success";
     }
