@@ -9,26 +9,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
-
 @Controller
-public class RegistrationController {
+public class LoginController {
+
     @Autowired private UserRepository userRepository;
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
+    // email existing check
+    public boolean isEmailExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 
-    @PostMapping("/register")
-    public String processRegistrationForm(@ModelAttribute("user") User user) {
-        // get account creation time
-        user.setDateCreated(LocalDate.now());
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
 
-        // Save user to database
-        userRepository.save(user);
-        // redirect
-        return "redirect:/registration-success";
+    @PostMapping("/login")
+    public String login(@ModelAttribute("user") User user) {
+        // check if email exists
+        String email = user.getEmail();
+        if (isEmailExists(email)) {
+            //
+        } else {
+            //
+        }
+        return "redirect:/login-success";
     }
 }
