@@ -35,6 +35,9 @@ public class LoginController {
             if (!user.getPassword().equals(password)) {
                 model.addAttribute("error", "Incorrect password");
                 return "login";
+            } else {
+                // add logic to log-in user (session)
+
             }
         } else {
             // if email is not in database, return error
