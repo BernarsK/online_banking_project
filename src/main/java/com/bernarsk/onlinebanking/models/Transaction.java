@@ -26,6 +26,9 @@ public class Transaction {
         this.reference = reference;
         this.status_approved=status_approved;
     }
+    public Long getId() {
+        return id;
+    }
 
 
     public String getAccountFrom() {
