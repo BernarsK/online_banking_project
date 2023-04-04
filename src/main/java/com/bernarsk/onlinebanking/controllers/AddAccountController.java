@@ -31,7 +31,7 @@ public class AddAccountController {
         // call service class
         accountService.addNewAccount(account);
         // change this later
-        return "redirect:/registration-success";
+        return "redirect:/home";
     }
 
 }

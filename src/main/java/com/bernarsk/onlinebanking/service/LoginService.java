@@ -27,9 +27,6 @@ public class LoginService {
 //    private String hashPassword(String password, String salt) {
 //        // Code to hash password with salt goes here
 //    }
-    public User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        return user;
-    }
+
 
 }

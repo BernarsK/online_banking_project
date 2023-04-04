@@ -13,4 +13,8 @@ public class UserService {
     public Integer findUserLevelByEmail(String email) {
         return userRepository.findUserLevelByEmail(email);
     }
+
+    public Integer findUserIdByEmail(String email) {
+        return userRepository.findUserIdByEmail(email);
+    }
 }

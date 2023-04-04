@@ -21,8 +21,9 @@ public class HomeController {
         }
         model.addAttribute("user", new User());
         Integer userLevel = userService.findUserLevelByEmail(emailSess);
-        System.out.println(userLevel);
+        Integer userId = userService.findUserIdByEmail(emailSess);
         model.addAttribute("userLevel", userLevel);
+        model.addAttribute("userId", userId);
 
         return "home";
     }
