@@ -2,15 +2,12 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Online Banking | Login or Register</title>
+  <title>JavaVault Banking | Create a New Account</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
 </head>
 <body>
 <div class="container-fluid text-center">
-  <h1>Welcome to JavaVault! </h1>
-  <div th:text="${session.email}"></div>
-  <a th:href="@{/create-account}">Create a new bank account</a>
-  <p>Your user level is: <span th:text="${userLevel}"></span></p>
+
   <a th:href="@{/logout}">Logout</a>
 </div>
 </body>

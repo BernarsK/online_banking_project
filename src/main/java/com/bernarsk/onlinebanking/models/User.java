@@ -15,12 +15,15 @@ public class User {
     private String password;
 
     private LocalDate creation_date;
+
+    private Integer userLevel;
     public User() {}
 
-    public User(String password, String email, LocalDate creation_date) {
+    public User(String password, String email, LocalDate creation_date, Integer userLevel) {
         this.password = password;
         this.email = email;
         this.creation_date = creation_date;
+        this.userLevel = userLevel;
     }
 
     public String getEmail() {
@@ -45,5 +48,13 @@ public class User {
 
     public void setDateCreated(LocalDate creation_date) {
         this.creation_date = creation_date;
+    }
+
+    public Integer getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(Integer userLevel) {
+        this.userLevel = userLevel;
     }
 }
