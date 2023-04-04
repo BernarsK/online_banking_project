@@ -18,15 +18,13 @@ public class Transaction {
     private Integer status_approved;
     public Transaction() {}
 
-    public Transaction(String accountFrom, String accountTo, LocalDate date, Double amount, String reference) {
+    public Transaction(String accountFrom, String accountTo, LocalDate date, Double amount, String reference, Integer status_approved) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.date = date;
         this.amount = amount;
         this.reference = reference;
-        if (amount>200)
-            this.status_approved=0;
-        else this.status_approved=1;
+        this.status_approved=status_approved;
     }
 
 
