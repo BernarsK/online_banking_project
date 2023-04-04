@@ -2,6 +2,7 @@ package com.bernarsk.onlinebanking.controllers;
 
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.service.LoginService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +25,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(Model model, @RequestParam String password, @RequestParam String email) {
+    public String login(Model model, @RequestParam String password, @RequestParam String email, HttpSession session) {
 
         boolean authenticated = loginService.authenticateUser(email, password);
         if (authenticated) {
-            return "redirect:/dashboard";
+            session.setAttribute("email", email);
+            return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login";

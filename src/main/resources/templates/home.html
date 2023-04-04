@@ -8,6 +8,8 @@
 <body>
 <div class="container-fluid text-center">
   <h1>Welcome to JavaVault! </h1>
+  <div th:text="${session.email}"></div>
+  <a th:href="@{/logout}">Logout</a>
 </div>
 </body>
 </html>
