@@ -1,6 +1,7 @@
 package com.bernarsk.onlinebanking.models;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 
 import java.time.LocalDate;
 
@@ -44,8 +45,9 @@ public class Account {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccountNumber() {
+        UUID uuid = UUID.randomUUID();
+        this.accountNumber = uuid.toString();
     }
 
     public Integer getAccountType() {
