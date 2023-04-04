@@ -25,6 +25,7 @@ public class RegistrationController {
     public String processRegistrationForm(@ModelAttribute("user") User user) {
         // call service class
         userService.saveUser(user);
+        // change this later
         return "redirect:/registration-success";
     }
 }
