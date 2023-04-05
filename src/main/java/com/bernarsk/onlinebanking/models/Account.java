@@ -3,14 +3,16 @@ package com.bernarsk.onlinebanking.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name="user_accounts")
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
+    private UUID id;
     private Integer userId;
     private String accountNumber;
 
@@ -24,11 +26,11 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

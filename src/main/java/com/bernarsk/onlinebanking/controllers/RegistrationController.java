@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
@@ -22,9 +23,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String processRegistrationForm(@ModelAttribute("user") User user) {
+    public String processRegistrationForm(@RequestParam String email, @RequestParam String password) {
         // call service class
-        userService.saveUser(user);
+        userService.saveUser(email, password);
         // change this later
         return "redirect:/registration-success";
     }

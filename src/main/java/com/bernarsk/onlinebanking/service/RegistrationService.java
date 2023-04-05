@@ -12,13 +12,14 @@ public class RegistrationService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveUser(User user) {
-        if (!userRepository.existsByEmail(user.getEmail())) {
-            user.setDateCreated(LocalDate.now());
+    public void saveUser(String email, String password) {
+        User user = new User(email, password);
+
+        if (userRepository.existsById(user.getId())) {
+            // UUID already exists in the database, call the same function
+            saveUser(email, password);
+        } else {
             userRepository.save(user);
-        }
-        else{
-            //email already exists in database
         }
     }
 }

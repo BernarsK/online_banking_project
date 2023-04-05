@@ -1,16 +1,19 @@
 package com.bernarsk.onlinebanking.models;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name="users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
+    private UUID id;
     private String email;
     private String password;
 
@@ -24,6 +27,22 @@ public class User {
         this.email = email;
         this.creation_date = creation_date;
         this.userLevel = userLevel;
+    }
+
+    public User(String email, String password) {
+        this.id = UUID.randomUUID();
+        this.email = email;
+        this.password = password;
+        this.creation_date = LocalDate.now();
+        this.userLevel = 0;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getEmail() {

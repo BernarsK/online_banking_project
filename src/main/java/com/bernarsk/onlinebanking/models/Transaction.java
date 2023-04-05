@@ -3,13 +3,16 @@ package com.bernarsk.onlinebanking.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
+
 @Entity
 @Table(name="user_transactions")
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
+    private UUID id;
     private String accountFrom;
     private String accountTo;
     private Double amount;
@@ -26,10 +29,13 @@ public class Transaction {
         this.reference = reference;
         this.status_approved=status_approved;
     }
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getAccountFrom() {
         return accountFrom;
