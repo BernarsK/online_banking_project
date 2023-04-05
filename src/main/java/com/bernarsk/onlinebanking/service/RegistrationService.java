@@ -2,6 +2,7 @@ package com.bernarsk.onlinebanking.service;
 
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.User;
+import com.bernarsk.onlinebanking.repositories.AccountRepository;
 import com.bernarsk.onlinebanking.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import java.util.UUID;
 public class RegistrationService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     public void saveUser(String email, String password) {
         User user = new User(email, password);
@@ -23,8 +26,19 @@ public class RegistrationService {
             saveUser(email, password);
         } else {
             // first account creation for a newly created user
-            Account account = new Account(userId);
+            createNewAccount(userId);
+            // register new user
             userRepository.save(user);
+        }
+    }
+
+    public void createNewAccount(UUID userId) {
+        Account account = new Account(userId);
+        if (accountRepository.existsById(userId)) {
+            // repeat function if id exists
+            createNewAccount(userId);
+        } else {
+            accountRepository.save(account);
         }
     }
 }

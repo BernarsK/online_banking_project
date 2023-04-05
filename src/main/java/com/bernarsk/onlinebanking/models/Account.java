@@ -1,5 +1,6 @@
 package com.bernarsk.onlinebanking.models;
 
+import com.bernarsk.onlinebanking.utils.IbanGenerator;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,7 +17,11 @@ public class Account {
     private UUID userId;
     private String accountNumber;
 
+    private Double balance;
+
     private Integer accountType;
+    // accountType 0 -> default checkings account
+    // accountType 1 -> savings account
 
     public Account() {}
 
@@ -27,7 +32,11 @@ public class Account {
     }
 
     public Account(UUID userId) {
+        this.id = UUID.randomUUID();
         this.userId = userId;
+        this.accountNumber = IbanGenerator.generateIban();
+        this.accountType = 0; // create checkings account on default
+        this.balance = 0.00; // default balance is 0.00
     }
 
     public UUID getId() {
@@ -60,5 +69,13 @@ public class Account {
 
     public void setAccountType(Integer accountType) {
         this.accountType = accountType;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }
