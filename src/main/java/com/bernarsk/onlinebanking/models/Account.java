@@ -13,17 +13,21 @@ public class Account {
     @GeneratedValue
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID id;
-    private Integer userId;
+    private UUID userId;
     private String accountNumber;
 
     private Integer accountType;
 
     public Account() {}
 
-    public Account(Integer userId, String accountNumber, Integer accountType) {
+    public Account(UUID userId, String accountNumber, Integer accountType) {
         this.userId = userId;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
+    }
+
+    public Account(UUID userId) {
+
     }
 
     public UUID getId() {
@@ -34,11 +38,11 @@ public class Account {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

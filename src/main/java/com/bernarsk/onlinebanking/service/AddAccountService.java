@@ -13,9 +13,6 @@ public class AddAccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void addNewAccount(Account account) {
-        // account creation logic
-    }
 }
 
 

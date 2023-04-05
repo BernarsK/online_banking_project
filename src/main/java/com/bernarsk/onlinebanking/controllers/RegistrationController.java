@@ -1,6 +1,7 @@
 package com.bernarsk.onlinebanking.controllers;
 
 import com.bernarsk.onlinebanking.models.User;
+import com.bernarsk.onlinebanking.service.AddAccountService;
 import com.bernarsk.onlinebanking.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 public class RegistrationController {
     @Autowired
     private RegistrationService userService;
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -26,7 +28,7 @@ public class RegistrationController {
     public String processRegistrationForm(@RequestParam String email, @RequestParam String password) {
         // call service class
         userService.saveUser(email, password);
-        // change this later
-        return "redirect:/registration-success";
+        // redirect to log in
+        return "redirect:/login";
     }
 }
