@@ -25,17 +25,16 @@ public class RegistrationService {
             // UUID already exists in the database, call the same function
             saveUser(email, password);
         } else {
-            // first account creation for a newly created user
-            //createNewAccount(userId);
             // register new user
             userRepository.save(user);
+            // first account creation for a newly created user
+            createNewAccount(userId);
         }
     }
 
     public void createNewAccount(UUID userId) {
         Account account = new Account(userId);
         if (accountRepository.existsById(account.getId())) {
-            // repeat function if id exists
             createNewAccount(userId);
         } else {
             accountRepository.save(account);
