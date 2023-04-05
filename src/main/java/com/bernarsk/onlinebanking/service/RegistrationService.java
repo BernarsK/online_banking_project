@@ -26,7 +26,7 @@ public class RegistrationService {
             saveUser(email, password);
         } else {
             // first account creation for a newly created user
-            createNewAccount(userId);
+            //createNewAccount(userId);
             // register new user
             userRepository.save(user);
         }
@@ -34,7 +34,7 @@ public class RegistrationService {
 
     public void createNewAccount(UUID userId) {
         Account account = new Account(userId);
-        if (accountRepository.existsById(userId)) {
+        if (accountRepository.existsById(account.getId())) {
             // repeat function if id exists
             createNewAccount(userId);
         } else {
