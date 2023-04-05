@@ -38,9 +38,9 @@ public class HomeController {
         model.addAttribute("userLevel", userLevel);
         model.addAttribute("userId", userId);
 
-//        List<Account> accounts = accountService.getAllAccountsForUser(userId);
-//        System.out.println(accounts);
-//        model.addAttribute("accounts", accounts);
+        List<Account> accounts = accountService.getAllAccountsForUser(userId);
+        System.out.println(accounts);
+        model.addAttribute("accounts", accounts);
 
         return "home";
     }
