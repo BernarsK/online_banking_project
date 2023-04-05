@@ -23,6 +23,7 @@
         <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
+      <a th:href="@{/register}">Register</a>
       <button type="submit" class="btn btn-primary">Login</button>
       <div th:if="${error}">
         <p style="color: red" th:text="${error}"></p>

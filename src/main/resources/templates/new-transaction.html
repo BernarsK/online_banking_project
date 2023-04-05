@@ -9,10 +9,14 @@
 <div class="container-fluid text-center">
   <h1 class="mt-5">New transaction</h1>
   <form th:object="${transaction}" th:action="@{/process-transaction}" method="post">
-    <label for="senderName">Sender Name:</label>
-    <input type="text" id="senderName" name="senderName" th:field="*{accountFrom}"><br><br>
 
-    <label for="receiverName">Receiver Name:</label>
+    <select class="form-control" id="account" name="account">
+      <option value="">-- Select a sender user --</option>
+      <th:block th:each="account : ${accounts}">
+        <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+      </th:block>
+    </select>
+    <label for="receiverName">Receiver account:</label>
     <input type="text" id="receiverName" name="receiverName" th:field="*{accountTo}"><br><br>
 
     <label for="amount">Amount:</label>

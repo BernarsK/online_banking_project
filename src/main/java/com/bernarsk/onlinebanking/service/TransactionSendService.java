@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TransactionSendService {
@@ -18,11 +19,13 @@ public class TransactionSendService {
     @Autowired
     private AccountRepository accountRepository;
     public void saveTransaction(HttpSession session, Transaction transaction) {
-        String userId = (String)session.getAttribute("email"); //logged in user id
-        Account senderId = accountRepository.findByAccountNumber(transaction.getAccountFrom());//user id of sender account
+        UUID userId = (UUID)session.getAttribute("UUID"); //logged in user id
+        Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());//account of sender
 //        List<Account> userAccounts = accountRepository.findByUserId(userId);
-        if (userId.equals(senderId.getUserId())) {//need to check if acountFrom is logged in user account
-            if (accountRepository.existsByAccountNumber(transaction.getAccountTo())) {
+        if (userId.equals(senderAccount.getUserId())) //need to check if acountFrom is logged in user account
+        {
+            if (accountRepository.existsByAccountNumber(transaction.getAccountTo()))
+            {
                 transaction.setDate(LocalDate.now());
                 if (transaction.getAmount() > 200)
                     transaction.setStatus_approved(0);

@@ -34,7 +34,7 @@ public class RegistrationService {
 
     public void createNewAccount(UUID userId) {
         Account account = new Account(userId);
-        if (accountRepository.existsById(account.getId())) {
+        if (accountRepository.existsById(account.getId()) || accountRepository.existsByAccountNumber(account.getAccountNumber())) {
             createNewAccount(userId);
         } else {
             accountRepository.save(account);
