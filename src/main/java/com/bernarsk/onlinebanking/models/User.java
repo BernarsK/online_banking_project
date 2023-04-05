@@ -31,6 +31,7 @@ public class User {
 
     public User(String email, String password) {
         this.id = UUID.randomUUID();
+        System.out.println(this.id);
         this.email = email;
         this.password = password;
         this.creation_date = LocalDate.now();

@@ -4,17 +4,19 @@ import com.bernarsk.onlinebanking.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public Integer findUserLevelByEmail(String email) {
+    public int findUserLevelByEmail(String email) {
         return userRepository.findUserLevelByEmail(email);
     }
 
-    public Integer findUserIdByEmail(String email) {
+    public UUID findUserIdByEmail(String email) {
         return userRepository.findUserIdByEmail(email);
     }
 }

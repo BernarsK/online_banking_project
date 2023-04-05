@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.UUID;
+
 @Controller
 public class HomeController {
     @Autowired
@@ -20,8 +22,8 @@ public class HomeController {
             return "redirect:/login";
         }
         model.addAttribute("user", new User());
-        Integer userLevel = userService.findUserLevelByEmail(emailSess);
-        Integer userId = userService.findUserIdByEmail(emailSess);
+        int userLevel = userService.findUserLevelByEmail(emailSess);
+        UUID userId = userService.findUserIdByEmail(emailSess);
         model.addAttribute("userLevel", userLevel);
         model.addAttribute("userId", userId);
 
