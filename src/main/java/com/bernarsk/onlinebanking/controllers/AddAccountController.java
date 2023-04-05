@@ -29,7 +29,7 @@ public class AddAccountController {
     @PostMapping("/create-account")
     public String processRegistrationForm(@ModelAttribute("account") Account account) {
         // call service class
-        accountService.addNewAccount(account);
+//        accountService.addNewAccount(account);
         // change this later
         return "redirect:/home";
     }

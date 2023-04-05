@@ -21,7 +21,7 @@ public class TransactionSendService {
         String userId = (String)session.getAttribute("email"); //logged in user id
         Account senderId = accountRepository.findByAccountNumber(transaction.getAccountFrom());//user id of sender account
 //        List<Account> userAccounts = accountRepository.findByUserId(userId);
-        if (userId.equals(senderId.getUserId())) {//need to check if aacountFrom is logged in user account
+        if (userId.equals(senderId.getUserId())) {//need to check if acountFrom is logged in user account
             if (accountRepository.existsByAccountNumber(transaction.getAccountTo())) {
                 transaction.setDate(LocalDate.now());
                 if (transaction.getAmount() > 200)

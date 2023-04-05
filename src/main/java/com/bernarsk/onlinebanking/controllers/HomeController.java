@@ -16,14 +16,14 @@ public class HomeController {
     private UserService userService;
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
-        String emailSess = (String) session.getAttribute("email");
+        UUID userId = (UUID)session.getAttribute("UUID");
         // check if session exists
-        if (emailSess == null) {
+        if (userId == null) {
             return "redirect:/login";
         }
         model.addAttribute("user", new User());
-        int userLevel = userService.findUserLevelByEmail(emailSess);
-        UUID userId = userService.findUserIdByEmail(emailSess);
+        User logedInUser = userService.findUserById(userId);
+        Integer userLevel = logedInUser.getUserLevel();
         model.addAttribute("userLevel", userLevel);
         model.addAttribute("userId", userId);
 

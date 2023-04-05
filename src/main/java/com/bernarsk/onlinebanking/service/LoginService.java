@@ -2,6 +2,7 @@ package com.bernarsk.onlinebanking.service;
 
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +11,21 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticateUser(String email, String password) {
+    public Boolean authenticateUser(HttpSession session, String email, String password) {
         if (userRepository == null) {
             System.out.println("userRepository is null");
             return false;
         }
+
         User user = userRepository.findByEmail(email);
         if (user != null) {
 //            String hashedPassword = hashPassword(password, user.getSalt());
 //            return hashedPassword.equals(user.getPassword());
-            return password.equals(user.getPassword());
+            if (password.equals(user.getPassword())){
+                session.setAttribute("UUID", user.getId());
+                session.setAttribute("email", email);
+                return true;
+            }
         }
         return false;
     }

@@ -27,9 +27,8 @@ public class LoginController {
     @PostMapping("/login")
     public String login(Model model, @RequestParam String password, @RequestParam String email, HttpSession session) {
 
-        boolean authenticated = loginService.authenticateUser(email, password);
+        Boolean authenticated = loginService.authenticateUser(session, email, password);
         if (authenticated) {
-            session.setAttribute("email", email);
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid username or password");
