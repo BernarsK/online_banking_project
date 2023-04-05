@@ -14,6 +14,7 @@ public class Account {
     @GeneratedValue
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID id;
+    @Column(name = "user_id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID userId;
     private String accountNumber;
 
