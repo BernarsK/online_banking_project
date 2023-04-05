@@ -14,8 +14,9 @@ import java.util.UUID;
 public class HomeController {
     @Autowired
     private UserService userService;
-    @GetMapping("/home")
-    public String home(HttpSession session, Model model) {
+
+    private
+    @GetMapping("/home") String home(HttpSession session, Model model) {
         UUID userId = (UUID)session.getAttribute("UUID");
         // check if session exists
         if (userId == null) {

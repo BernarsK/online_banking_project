@@ -12,6 +12,23 @@
   <a th:href="@{/create-account}">Create a new bank account</a>
   <p>Your user level is: <span th:text="${userLevel}"></span></p>
   <p>Your user ID is: <span th:text="${userId}"></span></p>
+  <h1>Your accounts:</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Account Number</th>
+      <th>Balance</th>
+      <th>Account Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${accounts}">
+      <td th:text="${account.accountNumber}"></td>
+      <td th:text="${account.balance}"></td>
+      <td th:text="${account.accountType}"></td>
+    </tr>
+    </tbody>
+  </table>
   <a th:href="@{/logout}">Logout</a>
 </div>
 </body>

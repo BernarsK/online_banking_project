@@ -2,7 +2,7 @@ package com.bernarsk.onlinebanking.controllers;
 
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.User;
-import com.bernarsk.onlinebanking.service.AddAccountService;
+import com.bernarsk.onlinebanking.service.AccountService;
 import com.bernarsk.onlinebanking.utils.IbanGenerator;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AddAccountController {
     @Autowired
-    private AddAccountService accountService;
+    private AccountService accountService;
 
     @GetMapping("create-account")
     public String showAccountForm(Model model, HttpSession session) {
