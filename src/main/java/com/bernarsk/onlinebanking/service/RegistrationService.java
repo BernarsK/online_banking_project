@@ -22,6 +22,7 @@ public class RegistrationService {
             // UUID already exists in the database, call the same function
             saveUser(email, password);
         } else {
+            // first account creation for a newly created user
             Account account = new Account(userId);
             userRepository.save(user);
         }

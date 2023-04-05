@@ -3,6 +3,7 @@ package com.bernarsk.onlinebanking.controllers;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.service.AddAccountService;
+import com.bernarsk.onlinebanking.utils.IbanGenerator;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class AddAccountController {
     @PostMapping("/create-account")
     public String processRegistrationForm(@ModelAttribute("account") Account account) {
         // call service class
-//        accountService.addNewAccount(account);
+        IbanGenerator.generateIban();
         // change this later
         return "redirect:/home";
     }

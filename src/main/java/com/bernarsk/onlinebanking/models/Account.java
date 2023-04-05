@@ -27,7 +27,7 @@ public class Account {
     }
 
     public Account(UUID userId) {
-
+        this.userId = userId;
     }
 
     public UUID getId() {
