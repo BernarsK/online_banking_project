@@ -30,7 +30,7 @@ public class TransactionSendController {
             return "redirect:/login";
         }
         List<Account> accounts = accountService.getAllAccountsForUser(userID);
-        model.addAttribute("userAccounts", accounts);
+        model.addAttribute("accounts", accounts);
         model.addAttribute("transaction", new Transaction());
         return "new-transaction";
     }
