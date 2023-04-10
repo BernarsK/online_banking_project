@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>TITLE</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+  <h1>View Accounts</h1>
+  <form method="POST" action="/view-account-transactions">
+    <label for="selectedAccount">Select an Account:</label>
+    <select id="selectedAccount" name="selectedAccount">
+      <th:block th:each="account : ${accounts}">
+        <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+      </th:block>
+    </select>
+    <button type="submit">View Transactions</button>
+  </form>
+  <a th:href="@{/home}">Home</a></br>
+</div>
+</body>
+</html>

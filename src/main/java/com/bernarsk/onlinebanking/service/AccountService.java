@@ -14,11 +14,11 @@ import java.util.UUID;
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
-
+    public Account findByAccountNumber(String accountNumber){
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
     public List<Account> getAllAccountsForUser(UUID userId) {
         List<Account> accountList = new ArrayList<>();
-        System.out.println(userId);
-        System.out.println(accountRepository.findByUserId(userId));
         return accountRepository.findByUserId(userId);
     }
 }

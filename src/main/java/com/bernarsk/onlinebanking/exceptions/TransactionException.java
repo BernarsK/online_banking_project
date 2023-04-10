@@ -17,4 +17,8 @@ public class TransactionException extends RuntimeException {
     public static TransactionException transactionAmountError() {
         return new TransactionException("Amount must be positive number");
     }
+
+    public static TransactionException accessError() {
+        return new TransactionException("Logged in user, has no access to other user accounts");
+    }
 }
