@@ -8,7 +8,7 @@
 <body>
 <div class="container-fluid text-center">
   <h1 class="mt-5">New transaction</h1>
-  <form th:object="${transaction}" th:action="@{/process-transaction}" method="post">
+  <form th:object="${transaction}" th:action="@{/new-transaction}" method="post">
       <label for="accountFrom">Sender account:</label>
       <select id="accountFrom" name="accountFrom">
         <th:block th:each="account : ${accounts}">
@@ -16,16 +16,17 @@
         </th:block>
       </select><br><br>
     <label for="accountTo">Receiver account:</label>
-    <input type="text" id="accountTo" name="accountTo" th:field="*{accountTo}"><br><br>
+    <input type="text" id="accountTo" name="accountTo" th:field="*{accountTo}" required><br><br>
 
     <label for="amount">Amount:</label>
-    <input type="text" id="amount" name="amount" th:field="*{amount}"><br><br>
+    <input type="number" min="0.01" step="0.01" id="amount" name="amount" th:field="*{amount}" required><br><br>
 
     <label for="reference">Description:</label>
-    <input type="text" id="reference" name="reference" th:field="*{reference}"><br><br>
+    <input type="text" id="reference" name="reference" th:field="*{reference}" required><br><br>
 
     <input type="submit" value="Submit">
   </form>
+  <p style="color: red" th:text="${error}"></p>
 </div>
 </body>
 </html>

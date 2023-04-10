@@ -1,5 +1,6 @@
 package com.bernarsk.onlinebanking.service;
 
+import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
 import com.bernarsk.onlinebanking.repositories.AccountRepository;
@@ -22,20 +23,25 @@ public class TransactionSendService {
     public void saveTransaction(HttpSession session, Transaction transaction) {
         UUID userId = (UUID) session.getAttribute("UUID"); //logged in user id
         Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());//account of sender
-//        List<Account> userAccounts = accountRepository.findByUserId(userId);
         if (userId.equals(senderAccount.getUserId())) //need to check if acountFrom is logged in user account
         {
             if (accountRepository.existsByAccountNumber(transaction.getAccountTo())) {
                 transaction.setDate(LocalDate.now());
-                if (transaction.getAmount() > 200)
-                    transaction.setStatus_approved(0);
-                else transaction.setStatus_approved(1); //transactions with amount above 200 need approval
-                Transaction savedTransaction = transactionRepository.save(transaction);
-                if (savedTransaction.getStatus_approved() == 1) {
-                    // transaction was successfully saved and transaction is approved
-                    processTransaction(savedTransaction);
-                }
-            } else ;//reciever account does not exist
+                if (transaction.getAmount()>=0) {
+                    if (transaction.getAmount() > 200)
+                        transaction.setStatus_approved(0);
+                    else transaction.setStatus_approved(1); //transactions with amount above 200 need approval
+                    Transaction savedTransaction = transactionRepository.save(transaction);
+                    if (savedTransaction.getStatus_approved() == 1) {
+                        // transaction was successfully saved and transaction is approved
+                        try {
+                            processTransaction(savedTransaction);
+                        } catch (TransactionException e) {
+                            throw e; //propagates processTransaction exception
+                        }
+                    }
+                } else throw TransactionException.transactionAmountError();
+            } else throw TransactionException.recieverAccountNotFound();//reciever account does not exist
         }
     }
 
@@ -51,7 +57,7 @@ public class TransactionSendService {
                 accountRepository.save(recieverAccount);
                 senderAccount.setBalance(senderBalance - transactionAmount);
                 accountRepository.save(senderAccount);//change balance of accounts by transaction amount and save it to database
-            } else ;//not enough balance
+            } else throw TransactionException.insufficientFunds();//not enough balance
         }
     }
 }

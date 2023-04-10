@@ -2,7 +2,7 @@ package com.bernarsk.onlinebanking.controllers;
 
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
-import com.bernarsk.onlinebanking.repositories.AccountRepository;
+import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.service.AccountService;
 import com.bernarsk.onlinebanking.service.TransactionSendService;
 import jakarta.servlet.http.HttpSession;
@@ -34,10 +34,22 @@ public class TransactionSendController {
         model.addAttribute("transaction", new Transaction());
         return "new-transaction";
     }
-    @PostMapping("/process-transaction")
-    public String processTransactionForm(@ModelAttribute("transaction") Transaction transaction, HttpSession session) {
+    @PostMapping("/new-transaction")
+    public String processTransactionForm(@ModelAttribute("transaction") Transaction transaction, HttpSession session, Model model) {
         // call service class
-        transactionSendService.saveTransaction(session, transaction);
+        try{
+            transactionSendService.saveTransaction(session, transaction);
+        }
+        catch (TransactionException e) {
+            UUID userID = (UUID) session.getAttribute("UUID");
+            if (userID == null) {
+                return "redirect:/login";
+            }
+            List<Account> accounts = accountService.getAllAccountsForUser(userID);
+            model.addAttribute("accounts", accounts);
+            model.addAttribute("error", e.getMessage());
+            return "new-transaction";
+        }
         // change this later
         return "redirect:/transaction-sent";
     }
