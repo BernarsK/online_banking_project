@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>TITLE</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid text-center">
+  <h1>Unapproved transaction</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Transaction ID</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Reference</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="transaction : ${unapprovedTransactions}">
+      <tr>
+        <td th:text="${transaction.id}"></td>
+        <td th:text="${transaction.accountFrom}"></td>
+        <td th:text="${transaction.accountTo}"></td>
+        <td th:text="${transaction.amount}"></td>
+        <td th:text="${transaction.date}"></td>
+        <td th:text="${transaction.reference}"></td>
+        <td th:text="${transaction.statusApproved}"></td>
+        <td>
+          <form th:action="@{/approve-transaction}" method="post">
+            <input type="hidden" name="transactionId" th:value="${transaction.id}" />
+            <button type="submit">Approve</button>
+          </form>
+        </td>
+      </tr>
+    </th:block>
+    </tbody>
+  </table>
+  <a th:href="@{/home}">Home</a></br>
+  <a href="/admin-panel">Admin panel</a>
+</div>
+</body>
+</html>
