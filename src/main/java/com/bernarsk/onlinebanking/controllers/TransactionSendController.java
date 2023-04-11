@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,10 +24,11 @@ public class TransactionSendController {
     @Autowired
     private AccountService accountService;
     @GetMapping("/new-transaction")
-    public String showTransactionForm(HttpSession session, Model model) {
+    public String showTransactionForm(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
         // check if session exists
         if (userID == null) {
+            redirectAttributes.addFlashAttribute("error", "not logged in");
             return "redirect:/login";
         }
         List<Account> accounts = accountService.getAllAccountsForUser(userID);
@@ -35,22 +37,23 @@ public class TransactionSendController {
         return "new-transaction";
     }
     @PostMapping("/new-transaction")
-    public String processTransactionForm(@ModelAttribute("transaction") Transaction transaction, HttpSession session, Model model) {
+    public String processTransactionForm(@ModelAttribute("transaction") Transaction transaction, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // call service class
+        UUID userID = (UUID) session.getAttribute("UUID");
+        if (userID == null) {
+            redirectAttributes.addFlashAttribute("error", "not logged in");
+            return "redirect:/login";
+        }
         try{
             transactionSendService.saveTransaction(session, transaction);
         }
         catch (TransactionException e) {
-            UUID userID = (UUID) session.getAttribute("UUID");
-            if (userID == null) {
-                return "redirect:/login";
-            }
             List<Account> accounts = accountService.getAllAccountsForUser(userID);
             model.addAttribute("accounts", accounts);
             model.addAttribute("error", e.getMessage());
             return "new-transaction";
         }
         // change this later
-        return "redirect:/transaction-sent";
+        return "redirect:/view-accounts";
     }
 }
