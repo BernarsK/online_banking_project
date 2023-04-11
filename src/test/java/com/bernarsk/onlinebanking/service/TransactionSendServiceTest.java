@@ -49,7 +49,7 @@ class TransactionSendServiceTest {
         assertEquals(transaction.getAccountTo(), transaction.getAccountTo());
         assertEquals(transaction.getAccountFrom(), savedTransaction.getAccountFrom());
         assertEquals(transaction.getDate(), savedTransaction.getDate());
-        assertEquals(transaction.getStatus_approved(), savedTransaction.getStatus_approved());
+        assertEquals(transaction.getStatusApproved(), savedTransaction.getStatusApproved());
         assertEquals(transaction.getReference(), savedTransaction.getReference());
 
 //        assertEquals(transaction.getTransactionType(), transactionDAO.getTransactionById(1).getTransactionType());

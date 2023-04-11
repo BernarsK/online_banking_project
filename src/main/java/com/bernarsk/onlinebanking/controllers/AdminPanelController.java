@@ -5,6 +5,7 @@ import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.service.AccountService;
+import com.bernarsk.onlinebanking.service.TransactionSendService;
 import com.bernarsk.onlinebanking.service.TransactionViewService;
 import com.bernarsk.onlinebanking.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class AdminPanelController {
     private UserService userService;
     @Autowired
     private TransactionViewService transactionViewService;
+    @Autowired
+    private TransactionSendService transactionSendService;
     @Autowired
     private AccountService accountService;
     @GetMapping("/admin-panel")
@@ -64,5 +67,50 @@ public class AdminPanelController {
         }
 
     }
+    @PostMapping("/adminView-unapprovedTransactions")
+    public String showUserAccount(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        UUID userID = (UUID) session.getAttribute("UUID");
+        User loggedInUser = userService.findUserById(userID);
+        if (loggedInUser.getUserLevel()==1){//only admins can have access
+            List<Transaction> unapprovedTransactions = transactionViewService.findAllByStatusApproved(0);
+            if (unapprovedTransactions.isEmpty()){ //checks if there is any unapproved transactions
+                redirectAttributes.addFlashAttribute("error", "no unapproved transactions");
+                return "redirect:/admin-panel";
+            }
+            model.addAttribute("unapprovedTransactions", unapprovedTransactions);
+            return "adminView-unapprovedTransactions";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("error", "not logged in as admin");
+            return "redirect:/login";
+        }
+
+    }
+    @PostMapping("/approve-transaction")
+    public String approveTransaction(@RequestParam("transactionId") UUID transactionId, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        UUID userID = (UUID) session.getAttribute("UUID");
+        User loggedInUser = userService.findUserById(userID);
+        if (loggedInUser.getUserLevel()==1){//only admins can have access
+            Transaction penidngTransaction = transactionViewService.findByID(transactionId);
+            if (penidngTransaction == null){ //checks if transaction was found (should always be true)
+                redirectAttributes.addFlashAttribute("error", "error couldn't find transaction");
+                return "redirect:/adminView-unapprovedTransactions";
+            }
+            transactionSendService.approveTransaction(penidngTransaction, session);
+            List<Transaction> unapprovedTransactions = transactionViewService.findAllByStatusApproved(0);
+            if (unapprovedTransactions.isEmpty()){ //checks if there is any unapproved transactions
+                redirectAttributes.addFlashAttribute("error", "no unapproved transactions");
+                return "redirect:/admin-panel";
+            }
+            model.addAttribute("unapprovedTransactions", unapprovedTransactions);
+            return "adminView-unapprovedTransactions";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("error", "not logged in as admin");
+            return "redirect:/login";
+        }
+
+    }
+
 
 }

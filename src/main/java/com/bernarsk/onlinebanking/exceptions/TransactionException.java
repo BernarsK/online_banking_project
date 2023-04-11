@@ -19,7 +19,7 @@ public class TransactionException extends RuntimeException {
     }
 
     public static TransactionException accessError() {
-        return new TransactionException("Logged in user, has no access to other user accounts");
+        return new TransactionException("Logged in user, has no access to this function");
     }
 
     public static TransactionException senderRecieverAccuntError() {
