@@ -21,6 +21,11 @@ public class AccountService {
         List<Account> accountList = new ArrayList<>();
         return accountRepository.findByUserId(userId);
     }
+
+    public void makeNewAccount(UUID userId, Integer accType) {
+        Account account = new Account(userId, accType);
+        accountRepository.save(account);
+    }
 }
 
 

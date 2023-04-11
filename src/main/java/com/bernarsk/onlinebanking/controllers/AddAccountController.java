@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.UUID;
 
 @Controller
 public class AddAccountController {
@@ -20,18 +23,30 @@ public class AddAccountController {
     @GetMapping("create-account")
     public String showAccountForm(Model model, HttpSession session) {
         // check if session exists
-        String emailSess = (String) session.getAttribute("email");
-        if (emailSess == null) {
+        UUID userSess = (UUID) session.getAttribute("UUID");
+        if (userSess == null) {
             return "redirect:/login";
         }
         model.addAttribute("user", new User());
+        model.addAttribute("account", new Account());
         return "create-account";
     }
     @PostMapping("/create-account")
-    public String processRegistrationForm(@ModelAttribute("account") Account account) {
-        // call service class
-        IbanGenerator.generateIban();
-        // change this later
+    public String processRegistrationForm(@RequestParam String accountType, HttpSession session) {
+        Integer accountTypeInt = 0;
+        switch (accountType) {
+            case "Checking":
+                accountTypeInt = 0;
+                break;
+            case "Savings":
+                accountTypeInt = 1;
+                break;
+            default:
+                System.out.println("ERROR!");
+        }
+        UUID userSess = (UUID) session.getAttribute("UUID");
+        accountService.makeNewAccount(userSess, accountTypeInt);
+
         return "redirect:/home";
     }
 

@@ -4,6 +4,8 @@ import com.bernarsk.onlinebanking.utils.IbanGenerator;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +28,8 @@ public class Account {
 
     private Integer accountActive;
 
+    public static final List<String> ACCOUNT_TYPES = Arrays.asList("Checking", "Savings");
+
     public Account() {}
 
     public Account(UUID userId, String accountNumber, Integer accountType) {
@@ -41,6 +45,16 @@ public class Account {
         this.accountType = 0; // create checkings account on default
         this.balance = 0.00; // default balance is 0.00
         this.accountActive = 1;
+
+    }
+
+    public Account(UUID userId, Integer accType) {
+        this.id = UUID.randomUUID();
+        this.userId = userId;
+        this.accountNumber = IbanGenerator.generateIban();
+        this.accountType = accType;
+        this.balance = 0.00; // default balance is 0.00
+        this.accountActive = 0; // has to wait for approval
 
     }
 
