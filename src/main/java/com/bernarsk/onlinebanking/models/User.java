@@ -18,6 +18,10 @@ public class User {
 
     private LocalDate creation_date;
 
+    private String verificationCode;
+
+    private Integer active;
+
     private Integer userLevel;
     public User() {}
 
@@ -33,6 +37,8 @@ public class User {
         System.out.println(this.id);
         this.email = email;
         this.password = password;
+        this.verificationCode = "test";
+        this.active = 0;
         this.creation_date = LocalDate.now();
         this.userLevel = 0;
     }

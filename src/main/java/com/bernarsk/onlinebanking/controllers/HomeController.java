@@ -3,6 +3,7 @@ package com.bernarsk.onlinebanking.controllers;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.service.AccountService;
+import com.bernarsk.onlinebanking.service.EmailService;
 import com.bernarsk.onlinebanking.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class HomeController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private EmailService emailService;
+
     private
     @GetMapping("/home") String home(HttpSession session, Model model,  RedirectAttributes redirectAttributes) {
         UUID userId = (UUID)session.getAttribute("UUID");
@@ -39,6 +43,9 @@ public class HomeController {
         List<Account> accounts = accountService.getAllAccountsForUser(userId);
         System.out.println(accounts);
         model.addAttribute("accounts", accounts);
+
+        // delete later
+        //emailService.sendSimpleMessage("kazoksbernars@gmail.com", "Test msg", "This is a test!");
 
         return "home";
     }
