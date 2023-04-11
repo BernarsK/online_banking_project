@@ -13,7 +13,6 @@ public class LoginService {
 
     public Boolean authenticateUser(HttpSession session, String email, String password) {
         if (userRepository == null) {
-            System.out.println("userRepository is null");
             return false;
         }
 

@@ -46,14 +46,15 @@ public class TransactionSendController {
         }
         try{
             transactionSendService.saveTransaction(session, transaction);
+            // change this later
+            return "redirect:/view-accounts";
         }
         catch (TransactionException e) {
             List<Account> accounts = accountService.getAllAccountsForUser(userID);
-            model.addAttribute("accounts", accounts);
+            model.addAttribute("accounts", accounts);//on error input fields are not cleared
             model.addAttribute("error", e.getMessage());
             return "new-transaction";
         }
-        // change this later
-        return "redirect:/view-accounts";
+
     }
 }
