@@ -11,10 +11,22 @@
   <form method="POST" action="/adminView-user">
     <label for="userEmail">User e-mail</label>
     <input type="text" id="userEmail" name="userEmail" required><br><br>
-    <button type="submit">View user</button>
+    <button type="submit">View user</button><br><br>
   </form>
+  <form method="POST" action="/view-account-transactions">
+    <label for="selectedAccount">User account number</label>
+    <input type="text" id="selectedAccount" name="selectedAccount" required><br><br>
+    <button type="submit">View transactions</button><br><br>
+  </form>
+
+  <form method="POST" action="/adminView-unapprovedTransactions">
+    <button type="submit">View unapproved transactions</button><br><br>
+  </form>
+
+  <a th:href="@{/home}">Home
   <a th:href="@{/logout}">Logout</a>
   <p style="color: red" th:text="${error}"></p>
+  </a>
 </div>
 </body>
 </html>

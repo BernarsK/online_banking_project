@@ -32,4 +32,11 @@ public class TransactionViewService {
         }//throws exception if logged in as normal user and tries to see other user account
         return transactionRepository.findAllByAccountFromOrAccountTo(senderAccountNumber, recieverAccountNumber);
     }
+    public List<Transaction> findAllByStatusApproved(Integer statusApproved) {
+        return transactionRepository.findAllByStatusApproved(statusApproved);
+    }
+
+    public Transaction findByID(UUID transactionId) {
+        return transactionRepository.findById(transactionId).orElse(null);
+    }
 }

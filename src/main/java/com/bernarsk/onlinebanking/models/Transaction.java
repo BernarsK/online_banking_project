@@ -18,16 +18,17 @@ public class Transaction {
     private Double amount;
     private LocalDate date;
     private String reference;
-    private Integer status_approved;
+    @Column(name = "status_approved")
+    private Integer statusApproved;
     public Transaction() {}
 
-    public Transaction(String accountFrom, String accountTo, LocalDate date, Double amount, String reference, Integer status_approved) {
+    public Transaction(String accountFrom, String accountTo, LocalDate date, Double amount, String reference, Integer statusApproved) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.date = date;
         this.amount = amount;
         this.reference = reference;
-        this.status_approved=status_approved;
+        this.statusApproved = statusApproved;
     }
     public UUID getId() {
         return id;
@@ -77,12 +78,12 @@ public class Transaction {
         this.reference = reference;
     }
 
-    public Integer getStatus_approved() {
-        return status_approved;
+    public Integer getStatusApproved() {
+        return statusApproved;
     }
 
-    public void setStatus_approved(Integer status_approved) {
-        this.status_approved = status_approved;
+    public void setStatusApproved(Integer statusApproved) {
+        this.statusApproved = statusApproved;
     }
 
 

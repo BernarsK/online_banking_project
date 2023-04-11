@@ -34,6 +34,9 @@
     </tr>
     </tbody>
   </table>
+  <div th:if="${userLevel == 1}">
+    <a th:href="@{/admin-panel}">Admin panel</a></br>
+  </div>
   <a th:href="@{/new-transaction}">New transaction</a></br>
   <a th:href="@{/view-accounts}">View accounts</a></br>
   <a th:href="@{/logout}">Logout</a>

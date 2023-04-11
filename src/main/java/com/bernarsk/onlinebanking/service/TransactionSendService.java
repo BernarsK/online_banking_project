@@ -3,14 +3,15 @@ package com.bernarsk.onlinebanking.service;
 import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
+import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.AccountRepository;
 import com.bernarsk.onlinebanking.repositories.TransactionRepository;
+import com.bernarsk.onlinebanking.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,8 @@ public class TransactionSendService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private UserService userService;
 
     public void saveTransaction(HttpSession session, Transaction transaction) {
         UUID userId = (UUID) session.getAttribute("UUID"); //logged in user id
@@ -32,10 +35,10 @@ public class TransactionSendService {
                 transaction.setDate(LocalDate.now());
                 if (transaction.getAmount()>=0) {
                     if (transaction.getAmount() > 200)
-                        transaction.setStatus_approved(0);
-                    else transaction.setStatus_approved(1); //transactions with amount above 200 need approval
+                        transaction.setStatusApproved(0);
+                    else transaction.setStatusApproved(1); //transactions with amount above 200 need approval
                     Transaction savedTransaction = transactionRepository.save(transaction);
-                    if (savedTransaction.getStatus_approved() == 1) {
+                    if (savedTransaction.getStatusApproved() == 1) {
                         // transaction was successfully saved and transaction is approved
                         try {
                             processTransaction(savedTransaction);
@@ -49,7 +52,7 @@ public class TransactionSendService {
     }
 
     private void processTransaction(Transaction transaction) {
-        if (transaction.getStatus_approved() == 1) {//processTransaction should be called olny on approved transactions but extra check in case of mistake
+        if (transaction.getStatusApproved() == 1) {//processTransaction should be called olny on approved transactions but extra check in case of mistake
             Account recieverAccount = accountRepository.findByAccountNumber(transaction.getAccountTo());
             Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());
             Double transactionAmount = transaction.getAmount();
@@ -65,5 +68,15 @@ public class TransactionSendService {
                 accountRepository.save(senderAccount);//change balance of accounts by transaction amount and save it to database
             } else throw TransactionException.insufficientFunds();//not enough balance
         } else throw TransactionException.transactionNotApproved();
+    }
+    public void approveTransaction(Transaction transaction, HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("UUID"); //logged in user id
+        User loggedInUser = userService.findUserById(userId);
+        if (loggedInUser.getUserLevel()!=1) {//only admins can have access
+            throw TransactionException.accessError();
+        }
+        transaction.setStatusApproved(1);
+        transactionRepository.save(transaction);
+        processTransaction(transaction);
     }
 }
