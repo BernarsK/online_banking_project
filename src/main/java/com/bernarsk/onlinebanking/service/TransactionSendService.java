@@ -75,6 +75,12 @@ public class TransactionSendService {
         if (loggedInUser.getUserLevel()!=1) {//only admins can have access
             throw TransactionException.accessError();
         }
+        Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());
+        if (senderAccount.getBalance()<transaction.getAmount()) { //checks for funds in sender account
+            transaction.setStatusApproved(2); //transaction canceled
+            transactionRepository.save(transaction);
+            throw TransactionException.insufficientFunds();
+        }
         transaction.setStatusApproved(1);
         transactionRepository.save(transaction);
         processTransaction(transaction);

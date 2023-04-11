@@ -52,7 +52,7 @@ public class AdminPanelController {
         User loggedInUser = userService.findUserById(userID);
         if (loggedInUser.getUserLevel()==1){//only admins can look for other user info
             User userInfo = userService.findUserByEmail(userEmail);
-            if (userInfo==null){ //checks if there is anyuser with provided email
+            if (userInfo==null){ //checks if there is any user with provided email
                 redirectAttributes.addFlashAttribute("error", "no user with that email");
                 return "redirect:/admin-panel";
             }
@@ -96,10 +96,16 @@ public class AdminPanelController {
                 redirectAttributes.addFlashAttribute("error", "error couldn't find transaction");
                 return "redirect:/adminView-unapprovedTransactions";
             }
-            transactionSendService.approveTransaction(penidngTransaction, session);
+
+            try{
+                transactionSendService.approveTransaction(penidngTransaction, session);
+            }
+            catch (TransactionException e) {
+                model.addAttribute("error", "transaction canceled, " + e.getMessage());
+                redirectAttributes.addFlashAttribute("error", "transaction canceled, " + e.getMessage());
+            }
             List<Transaction> unapprovedTransactions = transactionViewService.findAllByStatusApproved(0);
             if (unapprovedTransactions.isEmpty()){ //checks if there is any unapproved transactions
-                redirectAttributes.addFlashAttribute("error", "no unapproved transactions");
                 return "redirect:/admin-panel";
             }
             model.addAttribute("unapprovedTransactions", unapprovedTransactions);
