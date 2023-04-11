@@ -23,6 +23,9 @@ public class TransactionSendService {
     public void saveTransaction(HttpSession session, Transaction transaction) {
         UUID userId = (UUID) session.getAttribute("UUID"); //logged in user id
         Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());//account of sender
+        if(transaction.getAccountFrom()==transaction.getAccountTo()){
+            throw TransactionException.senderRecieverAccuntError();
+        }
         if (userId.equals(senderAccount.getUserId())) //need to check if acountFrom is logged in user account
         {
             if (accountRepository.existsByAccountNumber(transaction.getAccountTo())) {
@@ -51,13 +54,16 @@ public class TransactionSendService {
             Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());
             Double transactionAmount = transaction.getAmount();
             Double senderBalance = senderAccount.getBalance();
-            Double recieverBalance = senderAccount.getBalance();
+            Double recieverBalance = recieverAccount.getBalance();
+            if(senderAccount==recieverAccount){
+                throw TransactionException.senderRecieverAccuntError();
+            }
             if (senderBalance - transactionAmount >= 0) { //check if sender has balance to cover transaction amount
                 recieverAccount.setBalance(recieverBalance + transactionAmount);
                 accountRepository.save(recieverAccount);
                 senderAccount.setBalance(senderBalance - transactionAmount);
                 accountRepository.save(senderAccount);//change balance of accounts by transaction amount and save it to database
             } else throw TransactionException.insufficientFunds();//not enough balance
-        }
+        } else throw TransactionException.transactionNotApproved();
     }
 }

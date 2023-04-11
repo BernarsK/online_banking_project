@@ -21,4 +21,12 @@ public class TransactionException extends RuntimeException {
     public static TransactionException accessError() {
         return new TransactionException("Logged in user, has no access to other user accounts");
     }
+
+    public static TransactionException senderRecieverAccuntError() {
+        return new TransactionException("Sender and Reciever cant be the same account");
+    }
+
+    public static TransactionException transactionNotApproved() {
+        return new TransactionException("transaction is not approved");
+    }
 }
