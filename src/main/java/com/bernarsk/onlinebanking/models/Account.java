@@ -24,6 +24,8 @@ public class Account {
     // accountType 0 -> default checkings account
     // accountType 1 -> savings account
 
+    private Integer accountActive;
+
     public Account() {}
 
     public Account(UUID userId, String accountNumber, Integer accountType) {
@@ -38,6 +40,8 @@ public class Account {
         this.accountNumber = IbanGenerator.generateIban();
         this.accountType = 0; // create checkings account on default
         this.balance = 0.00; // default balance is 0.00
+        this.accountActive = 1;
+
     }
 
     public UUID getId() {

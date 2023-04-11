@@ -25,7 +25,12 @@
     <tr th:each="account : ${accounts}">
       <td th:text="${account.accountNumber}"></td>
       <td th:text="${account.balance}"></td>
-      <td th:text="${account.accountType}"></td>
+      <td>
+        <span th:switch="${account.accountType}">
+          <span th:case="0">User</span>
+          <span th:case="1">Admin</span>
+        </span>
+      </td>
     </tr>
     </tbody>
   </table>
