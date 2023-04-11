@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>TITLE</title>
+  <title>New Transaction</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
 </head>
 <body>
@@ -16,7 +16,7 @@
         </th:block>
       </select><br><br>
     <label for="accountTo">Receiver account:</label>
-    <input type="text" id="accountTo" name="accountTo" th:field="*{accountTo}" required><br><br>
+    <input type="text" id="accountTo" name="accountTo" maxlength="21" th:field="*{accountTo}" required><br><br>
 
     <label for="amount">Amount:</label>
     <input type="number" min="0.01" step="0.01" id="amount" name="amount" th:field="*{amount}" required><br><br>
