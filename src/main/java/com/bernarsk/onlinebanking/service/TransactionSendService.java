@@ -53,7 +53,7 @@ public class TransactionSendService {
             Double senderBalance = senderAccount.getBalance();
             Double recieverBalance = senderAccount.getBalance();
             if (senderBalance - transactionAmount >= 0) { //check if sender has balance to cover transaction amount
-                recieverAccount.setBalance(recieverBalance);
+                recieverAccount.setBalance(recieverBalance + transactionAmount);
                 accountRepository.save(recieverAccount);
                 senderAccount.setBalance(senderBalance - transactionAmount);
                 accountRepository.save(senderAccount);//change balance of accounts by transaction amount and save it to database

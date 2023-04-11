@@ -1,5 +1,7 @@
 package com.bernarsk.onlinebanking.service;
 
+import com.bernarsk.onlinebanking.exceptions.RegistrationException;
+import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.AccountRepository;
@@ -18,6 +20,9 @@ public class RegistrationService {
     private AccountRepository accountRepository;
 
     public void saveUser(String email, String password) {
+        if (userRepository.existsByEmail(email)){
+            throw RegistrationException.emailNotAvailable();//not enough balance
+        }
         User user = new User(email, password);
         UUID userId = user.getId();
 
