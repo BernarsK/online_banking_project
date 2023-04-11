@@ -37,7 +37,7 @@ public class User {
         System.out.println(this.id);
         this.email = email;
         this.password = password;
-        this.verificationCode = "test";
+        this.verificationCode = "";
         this.active = 0;
         this.creation_date = LocalDate.now();
         this.userLevel = 0;
@@ -81,5 +81,21 @@ public class User {
 
     public void setUserLevel(Integer userLevel) {
         this.userLevel = userLevel;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
     }
 }
