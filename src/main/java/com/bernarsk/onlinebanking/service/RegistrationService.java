@@ -9,6 +9,7 @@ import com.bernarsk.onlinebanking.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Random;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -22,13 +23,15 @@ public class RegistrationService {
 
     @Autowired
     private EmailService emailService;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void saveUser(String email, String password) {
         if (userRepository.existsByEmail(email)){
             throw RegistrationException.emailNotAvailable();//not enough balance
         }
-        User user = new User(email, password);
+        User user = new User(email, passwordEncoder.encode(password));
+//        User user = new User(email, password);
         UUID userId = user.getId();
 
         if (userRepository.existsById(user.getId())) {
