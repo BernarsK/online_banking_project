@@ -31,7 +31,6 @@ public class RegistrationService {
             throw RegistrationException.emailNotAvailable();//not enough balance
         }
         User user = new User(email, passwordEncoder.encode(password));
-//        User user = new User(email, password);
         UUID userId = user.getId();
 
         if (userRepository.existsById(user.getId())) {
@@ -40,7 +39,7 @@ public class RegistrationService {
         } else {
             // email verification for new user
             String verificationCode = generateVerificationCode();
-            emailService.sendSimpleMessage("kazoksbernars@gmail.com", "Verification code for new account", "Hello! Thanks for registering! Your verification code is: " + verificationCode);
+            emailService.sendSimpleMessage(email, "Verification code for new account", "Hello! Thanks for registering! Your verification code is: " + verificationCode);
             user.setVerificationCode(verificationCode);
             // register new user
             userRepository.save(user);

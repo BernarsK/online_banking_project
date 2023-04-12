@@ -69,11 +69,16 @@ public class TransactionSendService {
             } else throw TransactionException.insufficientFunds();//not enough balance
         } else throw TransactionException.transactionNotApproved();
     }
-    public void approveTransaction(Transaction transaction, HttpSession session) {
+    public void changeTransactionStatus(Transaction transaction, HttpSession session, Integer statusValue) {
         UUID userId = (UUID) session.getAttribute("UUID"); //logged in user id
         User loggedInUser = userService.findUserById(userId);
         if (loggedInUser.getUserLevel()!=1) {//only admins can have access
             throw TransactionException.accessError();
+        }
+        if (statusValue==2){//if transaction is being canceld need to change olny transaction status
+            transaction.setStatusApproved(statusValue);
+            transactionRepository.save(transaction);
+            return;
         }
         Account senderAccount = accountRepository.findByAccountNumber(transaction.getAccountFrom());
         if (senderAccount.getBalance()<transaction.getAmount()) { //checks for funds in sender account
@@ -81,7 +86,7 @@ public class TransactionSendService {
             transactionRepository.save(transaction);
             throw TransactionException.insufficientFunds();
         }
-        transaction.setStatusApproved(1);
+        transaction.setStatusApproved(statusValue);
         transactionRepository.save(transaction);
         processTransaction(transaction);
     }

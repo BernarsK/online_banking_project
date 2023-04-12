@@ -31,9 +31,17 @@
         <td th:text="${transaction.reference}"></td>
         <td th:text="${transaction.statusApproved}"></td>
         <td>
-          <form th:action="@{/approve-transaction}" method="post">
+          <form th:action="@{/change-transaction-status}" method="post">
             <input type="hidden" name="transactionId" th:value="${transaction.id}" />
+            <input type="hidden" name="statusValue" th:value=1 />
             <button type="submit">Approve</button>
+          </form>
+        </td>
+        <td>
+          <form th:action="@{/change-transaction-status}" method="post">
+            <input type="hidden" name="transactionId" th:value="${transaction.id}" />
+            <input type="hidden" name="statusValue" th:value=2 />
+            <button type="submit">Cancel</button>
           </form>
         </td>
       </tr>

@@ -86,8 +86,8 @@ public class AdminPanelController {
         }
 
     }
-    @PostMapping("/approve-transaction")
-    public String approveTransaction(@RequestParam("transactionId") UUID transactionId, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    @PostMapping("/change-transaction-status")
+    public String approveTransaction(@RequestParam("transactionId") UUID transactionId, @RequestParam("statusValue") Integer statusValue, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
         User loggedInUser = userService.findUserById(userID);
         if (loggedInUser.getUserLevel()==1){//only admins can have access
@@ -98,7 +98,7 @@ public class AdminPanelController {
             }
 
             try{
-                transactionSendService.approveTransaction(penidngTransaction, session);
+                transactionSendService.changeTransactionStatus(penidngTransaction, session, statusValue);
             }
             catch (TransactionException e) {
                 model.addAttribute("error", "transaction canceled, " + e.getMessage());
