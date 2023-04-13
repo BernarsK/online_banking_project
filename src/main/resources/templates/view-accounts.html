@@ -8,7 +8,7 @@
 <body>
 <div class="container-fluid text-center">
   <h1>View Accounts</h1>
-  <form method="POST" action="/view-account-transactions">
+  <form method="get" action="/view-account-transactions">
     <label for="selectedAccount">Select an Account:</label>
     <select id="selectedAccount" name="selectedAccount">
       <th:block th:each="account : ${accounts}">

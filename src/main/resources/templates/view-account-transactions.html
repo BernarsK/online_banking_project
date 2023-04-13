@@ -9,6 +9,35 @@
 <div class="container-fluid text-center">
   <h1>View Account Transactions</h1>
   <h2>Account Number: <span th:text="${selectedAccount}"></span></h2>
+
+
+  <form method="get">
+    <div class="mb-3">
+      <label for="startDate" class="form-label">Start Date:</label>
+      <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+    </div>
+    <div class="mb-3">
+      <label for="endDate" class="form-label">End Date:</label>
+      <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Status:</label>
+      <select class="form-select" id="status" name="status">
+        <option value="">All</option>
+        <option value=1 th:selected="${status == 1}">Pending</option>
+        <option value=0 th:selected="${status == 0}">Approved</option>
+        <option value=2 th:selected="${status == 2}">Rejected</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="reference" class="form-label">Reference:</label>
+      <input type="text" class="form-control" id="reference" name="reference" th:value="${reference}">
+    </div>
+    <input type="hidden" name="selectedAccount" th:value="${selectedAccount}" />
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </form>
+
+
   <table>
     <thead>
     <tr>
@@ -30,7 +59,15 @@
         <td th:text="${transaction.amount}"></td>
         <td th:text="${transaction.date}"></td>
         <td th:text="${transaction.reference}"></td>
-        <td th:text="${transaction.statusApproved}"></td>
+        <div th:if="${transaction.statusApproved == 0}">
+          <td>APPROVED</td>
+        </div>
+        <div th:if="${transaction.statusApproved == 1}">
+          <td>PENDING</td>
+        </div>
+        <div th:if="${transaction.statusApproved == 2}">
+          <td>CANCELED</td>
+        </div>
       </tr>
     </th:block>
     </tbody>
