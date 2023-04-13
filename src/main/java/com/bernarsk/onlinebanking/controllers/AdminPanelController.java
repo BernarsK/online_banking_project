@@ -46,7 +46,7 @@ public class AdminPanelController {
         }
         return "admin-panel";
     }
-    @PostMapping("/adminView-user")
+    @GetMapping("/adminView-user")
     public String showUserFromEmail(@RequestParam("userEmail")String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
         User loggedInUser = userService.findUserById(userID);
@@ -67,7 +67,7 @@ public class AdminPanelController {
         }
 
     }
-    @PostMapping("/adminView-unapprovedTransactions")
+    @GetMapping("/adminView-unapprovedTransactions")
     public String showUserAccount(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
         User loggedInUser = userService.findUserById(userID);

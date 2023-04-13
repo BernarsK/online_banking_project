@@ -8,18 +8,18 @@
 <body>
 <div class="container-fluid text-center">
   <h1>Admin panel</h1>
-  <form method="POST" action="/adminView-user">
+  <form method="get" action="/adminView-user">
     <label for="userEmail">User e-mail</label>
     <input type="text" id="userEmail" name="userEmail" required>
     <button type="submit">View user</button><br><br>
   </form>
-  <form method="POST" action="/view-account-transactions">
+  <form method="get" action="/view-account-transactions">
     <label for="selectedAccount">User account number</label>
     <input type="text" id="selectedAccount" name="selectedAccount" required>
     <button type="submit">View transactions</button><br><br>
   </form>
 
-  <form method="POST" action="/adminView-unapprovedTransactions">
+  <form method="get" action="/adminView-unapprovedTransactions">
     <button type="submit">View unapproved transactions</button><br><br>
   </form>
 
