@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionViewService {
@@ -38,5 +40,30 @@ public class TransactionViewService {
 
     public Transaction findByID(UUID transactionId) {
         return transactionRepository.findById(transactionId).orElse(null);
+    }
+
+    public List<Transaction> filterByDate(List<Transaction> accountTransactions, LocalDate startDate, LocalDate endDate) {
+        return accountTransactions.stream()
+                .filter(transaction -> {
+                    LocalDate transactionDate = transaction.getDate();
+                    return transactionDate.isEqual(startDate) || transactionDate.isEqual(endDate) ||
+                            (transactionDate.isAfter(startDate) && transactionDate.isBefore(endDate));
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<Transaction> filterByStatus(List<Transaction> accountTransactions, Integer status) {
+        return accountTransactions.stream()
+                .filter(transaction -> transaction.getStatusApproved() == status)
+                .collect(Collectors.toList());
+    }
+
+    public List<Transaction> filterByReference(List<Transaction> accountTransactions, String reference) {
+        if (reference == null || reference.trim().isEmpty()) {
+            return accountTransactions;
+        }
+        return accountTransactions.stream()
+                .filter(transaction -> transaction.getReference().contains(reference))
+                .collect(Collectors.toList());
     }
 }
