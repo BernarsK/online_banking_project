@@ -8,7 +8,7 @@
 <body>
   <h1>Change your account details</h1>
   <div id="change-account-details">
-    <form th:action="@{/my-account}" th:object="${user}" method="post" class="mt-4">
+    <form th:action="@{/my-account-set-full-name}" th:object="${user}" method="post" class="mt-4">
       <div class="form-group">
         <label for="name1">Name:</label>
         <input type="text" class="form-control" id="name1" th:field="*{name}" required>
@@ -18,20 +18,24 @@
         <label for="surname">Surname:</label>
         <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
       </div>
-
+      <button type="submit" class="btn btn-primary">Set name and surname</button>
+    </form>
+    <form th:action="@{/my-account-change-email}" th:object="${user}" method="post" class="mt-4">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" class="form-control" id="email" th:field="*{email}" required>
       </div>
-
+      <button type="submit" class="btn btn-primary">Set email</button>
+    </form>
+    <form th:action="@{/my-account-change-password}" th:object="${user}" method="post" class="mt-4">
       <div class="form-group">
         <label for="password1">Enter your new password (if you want to change it):</label>
-        <input type="password" class="form-control" id="password1" name="password1">
+        <input type="password" class="form-control" id="password1" name="password1" required>
       </div>
 
       <div class="form-group">
         <label for="password2">Enter your new password again:</label>
-        <input type="password" class="form-control" id="password2" name="password2">
+        <input type="password" class="form-control" id="password2" name="password2" required>
       </div>
 
       <div class="form-group">
@@ -39,7 +43,7 @@
         <input type="password" class="form-control" id="password" th:field="*{password}" required>
       </div>
 
-      <button type="submit" class="btn btn-primary">Update my account</button>
+      <button type="submit" class="btn btn-primary">Change password</button>
     </form>
     <div th:if="${error}">
       <p style="color: red" th:text="${error}"></p>

@@ -1,7 +1,9 @@
 package com.bernarsk.onlinebanking.controllers;
 
+import com.bernarsk.onlinebanking.exceptions.MyAccountException;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.UserRepository;
+import com.bernarsk.onlinebanking.service.MyAccountService;
 import com.bernarsk.onlinebanking.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,8 @@ public class MyAccountController {
     private UserService userService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private MyAccountService myAccountService;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/my-account") String myAccount(HttpSession session, RedirectAttributes redirectAttributes, Model model) {
         // check if user is logged in
@@ -39,47 +39,44 @@ public class MyAccountController {
         return "my-account";
     }
 
-    @PostMapping("/my-account") String postMyAccount(HttpSession session, Model model, @RequestParam String password1, @RequestParam String password2, @RequestParam String password, @RequestParam String name, @RequestParam String surname, @RequestParam String email) {
+    @PostMapping("/my-account-set-full-name") String changeNameSurname(HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String name, @RequestParam String surname) {
         // find user
         UUID userID = (UUID) session.getAttribute("UUID");
-        User logedInUser = userService.findUserById(userID);
-        model.addAttribute("user", logedInUser);
 
-        // user did not enter new password so he does not want to change it
-        if (password1 == "" && password2 == "") {
-            // no new passwords entered, update user name/surname/email
-            // check if entered password is correct
-            if (!passwordEncoder.matches(password, logedInUser.getPassword())) {
-                model.addAttribute("error", "Your current password is not entered correctly!");
-                return "my-account";
-            } else {
-                // update acc details
-                logedInUser.setName(name);
-                logedInUser.setSurname(surname);
-                logedInUser.setEmail(email);
-                userRepository.save(logedInUser);
-                return "redirect:/home";
-            }
-        } else {
-            // user wants to change password
-            if (!password1.equals(password2)) {
-                // entered passwords do not match
-                model.addAttribute("error", "Entered passwords do not match!");
-                return "my-account";
-            } else {
-                if (!passwordEncoder.matches(password, logedInUser.getPassword())) {
-                    model.addAttribute("error", "Your current password is not entered correctly!");
-                    return "my-account";
-                } else {
-                    // update acc details
-                    logedInUser.setName(name);
-                    logedInUser.setSurname(surname);
-                    logedInUser.setEmail(email);
-                    logedInUser.setPassword(passwordEncoder.encode(password1));
-                    userRepository.save(logedInUser);
-                    return "redirect:/home";
-                }
-            }
+        try {
+            myAccountService.setFullName(userID, name, surname, session);
+            return "redirect:/home";
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/my-account";
+        }
+    }
+    @PostMapping("/my-account-change-email") String changeEmail(HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String email) {
+        UUID userID = (UUID) session.getAttribute("UUID");
+
+        try {
+            myAccountService.setEmail(userID, email, session);
+            return "redirect:/home";
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/my-account";
+        }
+    }
+    @PostMapping("/my-account-change-password") String postMyAccount(HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String password1, @RequestParam String password2, @RequestParam String password) {
+        UUID userID = (UUID) session.getAttribute("UUID");
+        if (!password1.equals(password2)){
+            redirectAttributes.addFlashAttribute("error", "passwords dont match");
+            return "redirect:/my-account";
+        }
+        try {
+            myAccountService.changePassword(userID, password1, password, session);
+            return "redirect:/home";
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/my-account";
         }
     }
 }
