@@ -9,6 +9,8 @@ import com.bernarsk.onlinebanking.service.TransactionSendService;
 import com.bernarsk.onlinebanking.service.TransactionViewService;
 import com.bernarsk.onlinebanking.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,6 +88,8 @@ public class AdminPanelController {
         }
 
     }
+    private static final Logger logger = LoggerFactory.getLogger(AdminPanelController.class);
+
     @PostMapping("/change-transaction-status")
     public String approveTransaction(@RequestParam("transactionId") UUID transactionId, @RequestParam("statusValue") Integer statusValue, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
@@ -99,9 +103,14 @@ public class AdminPanelController {
 
             try{
                 transactionSendService.changeTransactionStatus(penidngTransaction, session, statusValue);
+                if (statusValue==0){
+                    logger.info("Transaction with ID: " + transactionId + " has been approved by admin: " + loggedInUser.getId());
+                }
+                else logger.info("Transaction with ID: " + transactionId + " has been canceled by admin: " + loggedInUser.getId());
             }
             catch (TransactionException e) {
                 model.addAttribute("error", "transaction canceled, " + e.getMessage());
+                logger.info("Transaction with ID: " + transactionId + " failed to be approved (not enough funds) by admin: " + loggedInUser.getId());
                 redirectAttributes.addFlashAttribute("error", "transaction canceled, " + e.getMessage());
             }
             List<Transaction> unapprovedTransactions = transactionViewService.findAllByStatusApproved(0);
