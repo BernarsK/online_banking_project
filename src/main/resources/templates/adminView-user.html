@@ -27,6 +27,49 @@
     </tbody>
   </table>
 </div>
+<h1>Change user account details</h1>
+<div id="change-account-details">
+  <form th:action="@{/admin-view-account-set-full-name}" th:object="${user}" method="post" class="mt-4">
+    <div class="form-group">
+      <input type="hidden" name="userEmail" th:value="${user.email}" />
+      <label for="name1">Name:</label>
+      <input type="text" class="form-control" id="name1" th:field="*{name}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="surname">Surname:</label>
+      <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Set name and surname</button>
+  </form>
+  <form th:action="@{/admin-view-account-change-email}" th:object="${user}" method="post" class="mt-4">
+    <div class="form-group">
+      <input type="hidden" name="userEmail" th:value="${user.email}" />
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" th:field="*{email}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Set email</button>
+  </form>
+  <form th:action="@{/admin-view-account-change-password}" th:object="${user}" method="post" class="mt-4">
+    <div class="form-group">
+      <input type="hidden" name="userEmail" th:value="${user.email}" />
+      <label for="password1">Enter your new password (if you want to change it):</label>
+      <input type="password" class="form-control" id="password1" name="password1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password2">Enter your new password again:</label>
+      <input type="password" class="form-control" id="password2" name="password2" required>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Change password</button>
+  </form>
+  <div th:if="${error}">
+    <p style="color: red" th:text="${error}"></p>
+  </div>
+</div>
 <a th:href="@{/admin-panel}">Admin panel</a>
 <a th:href="@{/home}">Logout</a>
 </body>

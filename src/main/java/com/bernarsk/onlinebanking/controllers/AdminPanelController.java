@@ -1,13 +1,11 @@
 package com.bernarsk.onlinebanking.controllers;
 
+import com.bernarsk.onlinebanking.exceptions.MyAccountException;
 import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
 import com.bernarsk.onlinebanking.models.User;
-import com.bernarsk.onlinebanking.service.AccountService;
-import com.bernarsk.onlinebanking.service.TransactionSendService;
-import com.bernarsk.onlinebanking.service.TransactionViewService;
-import com.bernarsk.onlinebanking.service.UserService;
+import com.bernarsk.onlinebanking.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +31,9 @@ public class AdminPanelController {
     private TransactionSendService transactionSendService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private MyAccountService myAccountService;
+
     @GetMapping("/admin-panel")
     public String showAdminPanel(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UUID userID = (UUID) session.getAttribute("UUID");
@@ -125,6 +126,52 @@ public class AdminPanelController {
             return "redirect:/login";
         }
 
+    }
+    @PostMapping("/admin-view-account-set-full-name") String changeNameSurname(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String name, @RequestParam String surname) {
+        // find user
+        User selectedUser = userService.findUserByEmail(userEmail);
+        UUID userID = selectedUser.getId();
+        String email=selectedUser.getEmail();
+
+        try {
+            myAccountService.setFullName(userID, name, surname, session);
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+    }
+    @PostMapping("/admin-view-account-change-email") String changeEmail(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String changedEmail) {
+        User selectedUser = userService.findUserByEmail(userEmail);
+        UUID userID = selectedUser.getId();
+        String email=selectedUser.getEmail();
+        try {
+            myAccountService.setEmail(userID, changedEmail, session);
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+    }
+    @PostMapping("/admin-view-account-change-password") String changePassword(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String password1, @RequestParam String password2) {
+        User selectedUser = userService.findUserByEmail(userEmail);
+        UUID userID = selectedUser.getId();
+        String email=selectedUser.getEmail();
+        if (!password1.equals(password2)){
+            redirectAttributes.addFlashAttribute("error", "passwords dont match");
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+        try {
+            String password ="not needed for admins"; //old password not needed for admins so can pass any string
+            myAccountService.changePassword(userID, password1, password, session);
+            return "redirect:/adminView-user?userEmail="+email;
+        }
+        catch (MyAccountException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/adminView-user?userEmail="+email;
+        }
     }
 
 
