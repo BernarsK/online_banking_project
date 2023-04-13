@@ -1,58 +1,222 @@
 package com.bernarsk.onlinebanking.service;
 
+import com.bernarsk.onlinebanking.exceptions.TransactionException;
+import com.bernarsk.onlinebanking.models.Account;
 import com.bernarsk.onlinebanking.models.Transaction;
+import com.bernarsk.onlinebanking.repositories.AccountRepository;
 import com.bernarsk.onlinebanking.repositories.TransactionRepository;
 import jakarta.servlet.http.HttpSession;
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
+import static org.mockito.ArgumentMatchers.any;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TransactionSendServiceTest {
+
     @Mock
-    HttpSession session;
-
-    @Before("")
-    public void setup() {
-        session = mock(HttpSession.class);
-    }
-    @Autowired
     private TransactionRepository transactionRepository;
+    @Mock
+    private AccountRepository accountRepository;
+    @Mock
+    private UserService userService;
+    @Mock
+    private HttpSession session;
+
+    @InjectMocks
+    private TransactionSendService transactionSendService;
+
+    private UUID userId;
+    private Account senderAccount;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        userId = UUID.randomUUID();
+        senderAccount = new Account();
+        senderAccount.setAccountNumber("1234567890");
+        senderAccount.setUserId(userId);
+        senderAccount.setBalance(500.0);
+    }
+
     @Test
-    void saveTransaction() {
-        // Create a transaction object with test data
+    void testSaveTransactionBelow200() throws TransactionException {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        Account recieverAccount = new Account();
+        senderAccount.setUserId(userId);
+        senderAccount.setAccountNumber("1234567890");
+        senderAccount.setBalance(1000.0);
+
+        recieverAccount.setUserId(userId);
+        recieverAccount.setAccountNumber("0987654321");
+        recieverAccount.setBalance(1000.0);
+
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+        when(accountRepository.findByAccountNumber(recieverAccount.getAccountNumber())).thenReturn(recieverAccount);
+        when(accountRepository.existsByAccountNumber("0987654321")).thenReturn(true);
+
+
         Transaction transaction = new Transaction();
-        transaction.setAmount(300.31);
-      //   transaction.setDate();
-      //  transaction.setStatus_approved();
-        String id = "";
-        session.setAttribute("id", id);
-        transaction.setAccountFrom("TestSender");
-        transaction.setAccountTo("TestReciever");
-        transaction.setReference("Test text");
+        transaction.setReference("JUnit test transaction");
+        transaction.setId(UUID.randomUUID());
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo("0987654321");
+        transaction.setAmount(100.0);
 
-        // Create an instance of the class containing the saveTransaction method
-        TransactionSendService transactionDAO = new TransactionSendService();
+        when(transactionRepository.save(any())).thenReturn(transaction);
+        // Exercise
+        transactionSendService.saveTransaction(session, transaction);
 
-        // Call the saveTransaction method
-        transactionDAO.saveTransaction(session, transaction);
-        Transaction savedTransaction = transactionRepository.getById(transaction.getId());
+        // Verify
+        assertEquals(900.0, senderAccount.getBalance());
+        assertEquals(1100.0, recieverAccount.getBalance());
+    }
+    @Test
+    void testSaveTransactionAbove200() throws TransactionException {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        Account recieverAccount = new Account();
+        senderAccount.setUserId(userId);
+        senderAccount.setAccountNumber("1234567890");
+        senderAccount.setBalance(1000.0);
 
-        // Verify that the session has been updated
-//        assertEquals(100, session.getAttribute("totalTransactionAmount"));
+        recieverAccount.setUserId(userId);
+        recieverAccount.setAccountNumber("0987654321");
+        recieverAccount.setBalance(1000.0);
 
-        // Verify that the transaction has been saved correctly
-        assertEquals(transaction.getAmount(), savedTransaction.getAmount());
-        assertEquals(transaction.getAccountTo(), transaction.getAccountTo());
-        assertEquals(transaction.getAccountFrom(), savedTransaction.getAccountFrom());
-        assertEquals(transaction.getDate(), savedTransaction.getDate());
-        assertEquals(transaction.getStatusApproved(), savedTransaction.getStatusApproved());
-        assertEquals(transaction.getReference(), savedTransaction.getReference());
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+        when(accountRepository.findByAccountNumber(recieverAccount.getAccountNumber())).thenReturn(recieverAccount);
+        when(accountRepository.existsByAccountNumber("0987654321")).thenReturn(true);
 
-//        assertEquals(transaction.getTransactionType(), transactionDAO.getTransactionById(1).getTransactionType());
 
+        Transaction transaction = new Transaction();
+        transaction.setReference("JUnit test transaction");
+        transaction.setId(UUID.randomUUID());
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo("0987654321");
+        transaction.setAmount(400.0);
+
+        when(transactionRepository.save(any())).thenReturn(transaction);
+        // Exercise
+        transactionSendService.saveTransaction(session, transaction);
+
+        // Verify
+        assertEquals(1000.0, senderAccount.getBalance());
+        assertEquals(1000.0, recieverAccount.getBalance());
+        assertEquals(transaction.getStatusApproved(), 0);
+    }
+    @Test
+    void testSaveTransactionThrowsExceptionIfRecieverDoesNotExist() throws TransactionException {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        Account recieverAccount = new Account();
+        senderAccount.setUserId(userId);
+        senderAccount.setAccountNumber("1234567890");
+        senderAccount.setBalance(1000.0);
+
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+        when(accountRepository.existsByAccountNumber("0987654321")).thenReturn(false);
+
+
+        Transaction transaction = new Transaction();
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo(senderAccount.getAccountNumber());
+
+        assertThrows(TransactionException.class, () -> {
+            // Exercise
+            transactionSendService.saveTransaction(session, transaction);
+        });
+    }
+    @Test
+    void testSaveTransactionThrowsExceptionIfAmountIsNegative() throws TransactionException {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        Account recieverAccount = new Account();
+        senderAccount.setUserId(userId);
+        senderAccount.setAccountNumber("1234567890");
+        senderAccount.setBalance(1000.0);
+
+        recieverAccount.setUserId(userId);
+        recieverAccount.setAccountNumber("0987654321");
+        recieverAccount.setBalance(1000.0);
+
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+        when(accountRepository.findByAccountNumber(recieverAccount.getAccountNumber())).thenReturn(recieverAccount);
+        when(accountRepository.existsByAccountNumber("0987654321")).thenReturn(true);
+
+
+        Transaction transaction = new Transaction();
+        transaction.setReference("JUnit test transaction");
+        transaction.setId(UUID.randomUUID());
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo("0987654321");
+        transaction.setAmount(-400.0);
+
+        when(transactionRepository.save(any())).thenReturn(transaction);
+        // Verify
+        assertThrows(TransactionException.class, () -> {
+            // Exercise
+            transactionSendService.saveTransaction(session, transaction);
+        });
+    }
+
+    @Test
+    void testSaveTransactionThrowsExceptionIfSenderAndReceiverAccountsAreTheSame() {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        senderAccount.setUserId(userId);
+        senderAccount.setAccountNumber("1234567890");
+
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+
+        Transaction transaction = new Transaction();
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo(senderAccount.getAccountNumber());
+
+        // Verify
+        assertThrows(TransactionException.class, () -> {
+            // Exercise
+            transactionSendService.saveTransaction(session, transaction);
+        });
+    }
+
+    @Test
+    void testSaveTransactionThrowsExceptionIfAccountFromDoesNotBelongToLoggedInUser() {
+        // Setup
+        UUID userId = UUID.randomUUID();
+        Account senderAccount = new Account();
+        senderAccount.setUserId(UUID.randomUUID());
+        senderAccount.setAccountNumber("1234567890");
+
+        when(session.getAttribute("UUID")).thenReturn(userId);
+        when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
+
+        Transaction transaction = new Transaction();
+        transaction.setAccountFrom(senderAccount.getAccountNumber());
+        transaction.setAccountTo("0987654321");
+
+        // Verify
+        assertThrows(TransactionException.class, () -> {
+            // Exercise
+            transactionSendService.saveTransaction(session, transaction);
+        });
     }
 }

@@ -29,4 +29,8 @@ public class TransactionException extends RuntimeException {
     public static TransactionException transactionNotApproved() {
         return new TransactionException("transaction is not approved");
     }
+
+    public static TransactionException notUsersAccountError() {
+        return new TransactionException("account is not logged in user account");
+    }
 }

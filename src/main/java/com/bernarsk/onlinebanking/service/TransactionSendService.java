@@ -6,7 +6,6 @@ import com.bernarsk.onlinebanking.models.Transaction;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.AccountRepository;
 import com.bernarsk.onlinebanking.repositories.TransactionRepository;
-import com.bernarsk.onlinebanking.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +48,7 @@ public class TransactionSendService {
                 } else throw TransactionException.transactionAmountError();
             } else throw TransactionException.recieverAccountNotFound();//reciever account does not exist
         }
+        else throw TransactionException.notUsersAccountError();
     }
 
     private void processTransaction(Transaction transaction) {

@@ -13,7 +13,6 @@ import java.util.UUID;
 public class Account {
 
     @Id
-    @GeneratedValue
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID id;
     @Column(name = "user_id", columnDefinition = "BINARY(16)", updatable = false)
