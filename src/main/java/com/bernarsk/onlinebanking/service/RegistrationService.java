@@ -26,16 +26,16 @@ public class RegistrationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void saveUser(String email, String password) {
+    public void saveUser(String email, String password, String name, String surname) {
         if (userRepository.existsByEmail(email)){
             throw RegistrationException.emailNotAvailable();//not enough balance
         }
-        User user = new User(email, passwordEncoder.encode(password));
+        User user = new User(email, passwordEncoder.encode(password), name, surname);
         UUID userId = user.getId();
 
         if (userRepository.existsById(user.getId())) {
             // UUID already exists in the database, call the same function
-            saveUser(email, password);
+            saveUser(email, password, name, surname);
         } else {
             // email verification for new user
             String verificationCode = generateVerificationCode();

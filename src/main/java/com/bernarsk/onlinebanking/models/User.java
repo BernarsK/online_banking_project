@@ -13,6 +13,10 @@ public class User {
     @Id
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID id;
+
+    private String name;
+
+    private String surname;
     private String email;
     private String password;
 
@@ -32,11 +36,13 @@ public class User {
         this.userLevel = userLevel;
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, String name, String surname) {
         this.id = UUID.randomUUID();
         System.out.println(this.id);
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
         this.verificationCode = "";
         this.active = 0;
         this.creation_date = LocalDate.now();
@@ -97,5 +103,21 @@ public class User {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }
