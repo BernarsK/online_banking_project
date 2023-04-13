@@ -1,6 +1,5 @@
 package com.bernarsk.onlinebanking.service;
 
-import com.bernarsk.onlinebanking.exceptions.LoginException;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +23,6 @@ public class LoginService {
         }
 
         session.setAttribute("UUID", user.getId());
-        session.setAttribute("email", email);
         return true;
     }
 

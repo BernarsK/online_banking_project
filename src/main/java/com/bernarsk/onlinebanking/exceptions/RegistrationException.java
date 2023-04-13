@@ -5,6 +5,6 @@ public class RegistrationException extends RuntimeException {
         super(message);
     }
     public static RegistrationException emailNotAvailable() {
-        return new RegistrationException("Email not available");
+        return new RegistrationException("Email already registered");
     }
 }

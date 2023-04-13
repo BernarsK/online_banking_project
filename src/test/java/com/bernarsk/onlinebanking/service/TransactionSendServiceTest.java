@@ -35,6 +35,7 @@ class TransactionSendServiceTest {
 
     private UUID userId;
     private Account senderAccount;
+    private Account recieverAccount;
 
     @BeforeEach
     void setUp() {
@@ -43,22 +44,16 @@ class TransactionSendServiceTest {
         senderAccount = new Account();
         senderAccount.setAccountNumber("1234567890");
         senderAccount.setUserId(userId);
-        senderAccount.setBalance(500.0);
+        senderAccount.setBalance(1000.0);
+        recieverAccount = new Account();
+        recieverAccount.setUserId(userId);
+        recieverAccount.setAccountNumber("0987654321");
+        recieverAccount.setBalance(1000.0);
     }
 
     @Test
     void testSaveTransactionBelow200() throws TransactionException {
-        // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        Account recieverAccount = new Account();
-        senderAccount.setUserId(userId);
-        senderAccount.setAccountNumber("1234567890");
-        senderAccount.setBalance(1000.0);
 
-        recieverAccount.setUserId(userId);
-        recieverAccount.setAccountNumber("0987654321");
-        recieverAccount.setBalance(1000.0);
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
@@ -83,17 +78,6 @@ class TransactionSendServiceTest {
     }
     @Test
     void testSaveTransactionAbove200() throws TransactionException {
-        // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        Account recieverAccount = new Account();
-        senderAccount.setUserId(userId);
-        senderAccount.setAccountNumber("1234567890");
-        senderAccount.setBalance(1000.0);
-
-        recieverAccount.setUserId(userId);
-        recieverAccount.setAccountNumber("0987654321");
-        recieverAccount.setBalance(1000.0);
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
@@ -119,13 +103,7 @@ class TransactionSendServiceTest {
     }
     @Test
     void testSaveTransactionThrowsExceptionIfRecieverDoesNotExist() throws TransactionException {
-        // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        Account recieverAccount = new Account();
-        senderAccount.setUserId(userId);
-        senderAccount.setAccountNumber("1234567890");
-        senderAccount.setBalance(1000.0);
+
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
@@ -143,17 +121,7 @@ class TransactionSendServiceTest {
     }
     @Test
     void testSaveTransactionThrowsExceptionIfAmountIsNegative() throws TransactionException {
-        // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        Account recieverAccount = new Account();
-        senderAccount.setUserId(userId);
-        senderAccount.setAccountNumber("1234567890");
-        senderAccount.setBalance(1000.0);
 
-        recieverAccount.setUserId(userId);
-        recieverAccount.setAccountNumber("0987654321");
-        recieverAccount.setBalance(1000.0);
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
@@ -178,11 +146,6 @@ class TransactionSendServiceTest {
 
     @Test
     void testSaveTransactionThrowsExceptionIfSenderAndReceiverAccountsAreTheSame() {
-        // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        senderAccount.setUserId(userId);
-        senderAccount.setAccountNumber("1234567890");
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
@@ -201,10 +164,6 @@ class TransactionSendServiceTest {
     @Test
     void testSaveTransactionThrowsExceptionIfAccountFromDoesNotBelongToLoggedInUser() {
         // Setup
-        UUID userId = UUID.randomUUID();
-        Account senderAccount = new Account();
-        senderAccount.setUserId(UUID.randomUUID());
-        senderAccount.setAccountNumber("1234567890");
 
         when(session.getAttribute("UUID")).thenReturn(userId);
         when(accountRepository.findByAccountNumber(senderAccount.getAccountNumber())).thenReturn(senderAccount);
