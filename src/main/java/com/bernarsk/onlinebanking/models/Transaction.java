@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Transaction {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
     private UUID id;
     private String accountFrom;
