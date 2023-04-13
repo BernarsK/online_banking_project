@@ -16,9 +16,6 @@ public class LoginService {
     private PasswordEncoder passwordEncoder;
 
     public Boolean authenticateUser(HttpSession session, String email, String password) {
-        if (userRepository == null) {
-            return false;
-        }
 
         User user = userRepository.findByEmail(email);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
@@ -31,9 +28,6 @@ public class LoginService {
         return true;
     }
 
-//    private String hashPassword(String password, String salt) {
-//        // Code to hash password with salt goes here
-//    }
 
 
 }
