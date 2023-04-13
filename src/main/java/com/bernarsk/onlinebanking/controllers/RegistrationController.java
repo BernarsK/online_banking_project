@@ -22,10 +22,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String processRegistrationForm(@RequestParam String email, @RequestParam String password, Model model) {
+    public String processRegistrationForm(@RequestParam String email, @RequestParam String password, @RequestParam String name, @RequestParam String surname, Model model) {
         // call service class
         try {
-            registrationService.saveUser(email, password);
+            registrationService.saveUser(email, password, name, surname);
             // redirect to log in
             return "redirect:/login";
         }
