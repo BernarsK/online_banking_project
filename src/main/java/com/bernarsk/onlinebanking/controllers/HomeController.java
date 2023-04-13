@@ -43,9 +43,7 @@ public class HomeController {
         List<Account> accounts = accountService.getAllAccountsForUser(userId);
         System.out.println(accounts);
         model.addAttribute("accounts", accounts);
-
-        // delete later
-        //emailService.sendSimpleMessage("kazoksbernars@gmail.com", "Test msg", "This is a test!");
+        model.addAttribute("user", logedInUser);
 
         return "home";
     }

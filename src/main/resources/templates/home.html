@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-  <h1>Welcome to JavaVault! </h1>
+  <h1>Welcome to JavaVault, <span th:text="${user.getName()}"></span>!</h1>
   <div th:text="${session.email}"></div>
   <a th:href="@{/create-account}">Create a new bank account</a>
   <p>Your user level is: <span th:text="${userLevel}"></span></p>
@@ -37,6 +37,7 @@
   <div th:if="${userLevel == 1}">
     <a th:href="@{/admin-panel}">Admin panel</a></br>
   </div>
+  <a th:href="@{/my-account}">My account</a></br>
   <a th:href="@{/new-transaction}">New transaction</a></br>
   <a th:href="@{/view-accounts}">View accounts</a></br>
   <a th:href="@{/logout}">Logout</a>
