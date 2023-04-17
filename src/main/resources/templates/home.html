@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <title>Online Banking | Login or Register</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="container-fluid text-center">
-  <h1>Welcome to JavaVault, <span th:text="${user.getName()}"></span>!</h1>
-  <div th:text="${session.email}"></div>
-  <a th:href="@{/create-account}">Create a new bank account</a>
-  <p>Your user level is: <span th:text="${userLevel}"></span></p>
-  <p>Your user ID is: <span th:text="${userId}"></span></p>
+<main>
+  <div class="container-middle main">
+    <div class="container-fluid text-center">
+  <h2>Welcome to JavaVault, <span th:text="${user.getName()}"></span>!</h2>
+  <a class="button full-width" th:href="@{/create-account}">Create a new bank account</a>
+<!--  <p>Your user level is: <span th:text="${userLevel}"></span></p>-->
+<!--  <p>Your user ID is: <span th:text="${userId}"></span></p>-->
   <h1>Your accounts:</h1>
   <table>
     <thead>
@@ -34,13 +36,15 @@
     </tr>
     </tbody>
   </table>
-  <div th:if="${userLevel == 1}">
-    <a th:href="@{/admin-panel}">Admin panel</a></br>
-  </div>
-  <a th:href="@{/my-account}">My account</a></br>
-  <a th:href="@{/new-transaction}">New transaction</a></br>
-  <a th:href="@{/view-accounts}">View accounts</a></br>
-  <a th:href="@{/logout}">Logout</a>
+      <div class="button-kingdom">
+      <a th:if="${userLevel == 1}" class="button transparent" th:href="@{/admin-panel}">Admin panel</a></br>
+  <a class="button transparent" th:href="@{/my-account}">My account</a></br>
+  <a class="button transparent" th:href="@{/new-transaction}">New transaction</a></br>
+  <a class="button transparent" th:href="@{/view-accounts}">View accounts</a></br>
+  <a class="button transparent" th:href="@{/logout}">Logout</a>
+        </div>
 </div>
+  </div>
+</main>
 </body>
 </html>

@@ -4,37 +4,44 @@
   <meta charset="UTF-8">
   <title>Online Banking | Login</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="container-fluid text-center">
-  <div class="login-form">
-    <h1>Login Page</h1>
-    <hr>
-    <form method="post" action="/login">
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="text" class="form-control" id="email" th:field="*{user.email}" required>
+<main>
+  <div class="container-middle">
+    <div class="container-fluid text-center">
+      <div class="login-form">
+        <h1>Login Page</h1>
+        <form method="post" action="/login">
+          <div class="form-group">
+<!--            <label for="email">E-mail</label>-->
+            <input type="text" class="form-control" id="email" placeholder="E-mail" th:field="*{user.email}" required>
+          </div>
+          <div class="form-group">
+<!--            <label for="password">Password</label>-->
+            <input type="password" class="form-control" id="password" placeholder="Password"  th:field="*{user.password}"required>
+          </div>
+          <div th:if="${isActivationCodeInvalid}" class="verification-form">
+            <label>Verification Code:</label>
+            <input type="text" name="verificationCode" id="verificationCode"/>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+          </div>
+            <div class="buttons">
+                <a class="button transparent small" th:href="@{/register}">Register</a>
+              <a class="button transparent small" th:href="@{/forgot-password}">Forgot password</a>
+                <button class="button small" type="submit">Login</button>
+            </div>
+          <div th:if="${error}">
+
+            <p style="color: red" th:text="${error}"></p>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password"  th:field="*{user.password}"required>
-      </div>
-      <div th:if="${isActivationCodeInvalid}" class="verification-form">
-        <label>Verification Code:</label>
-        <input type="text" name="verificationCode" id="verificationCode"/>
-      </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-        <label class="form-check-label" for="rememberMe">Remember me</label>
-      </div>
-      <a th:href="@{/register}">Register</a>
-      <button type="submit" class="btn btn-primary">Login</button>
-      <a th:href="@{/forgot-password}">Forgot password</a>
-      <div th:if="${error}">
-        <p style="color: red" th:text="${error}"></p>
-      </div>
-    </form>
+    </div>
   </div>
-</div>
+</main>
 </body>
 </html>
