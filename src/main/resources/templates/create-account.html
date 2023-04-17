@@ -7,9 +7,9 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main>
+<main class="create-account">
 <div class="container-middle">
-  <h2>Create a new account</h2>
+  <h1>Create a new account</h1>
   <form th:action="@{/create-account}" th:object="${account}" method="post" class="mt-4">
     <label>Account Type:</label>
     <select th:field="*{accountType}" required>
@@ -17,8 +17,8 @@
     </select>
     <br />
     <button type="submit" class="button">Create new account</button>
+    <a class="button transparent" th:href="@{/home}">Home</a>
   </form>
-  <a class="button transparent" th:href="@{/home}">Home</a>
 
 </div>
 </main>
