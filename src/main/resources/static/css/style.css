@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    position: relative;
+}
+
+title {
+    display: none;
+}
+
+main {
+    max-width: 1380px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1.landing {
+    text-transform: uppercase;
+    font-size: 50px;
+    margin: 0 0 50px 0;
+}
+
+h1 {
+    text-transform: uppercase;
+    margin: 0 0 40px 0;
+}
+
+.button {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #2ca700;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 16px 0;
+    width: 200px;
+    display: inline-block;
+    margin: 0 10px 20px 10px;
+    border: 2px solid #2ca700;
+    transition: .3s ease;
+}
+
+.button:hover {
+    color: #000000;
+}
+
+.button.transparent {
+    color: #2ca700;
+    background-color: transparent;
+    border: 2px solid #2ca700;
+}
+
+.logo {
+    width: 600px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+.container-middle {
+    padding: 80px 100px;
+    border-radius: 16px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.container-middle.main {
+    width: 100%;
+    margin: 120px 0;
+}
+
+/*LOGIN PAGE*/
+.login-form {
+    width: 650px;
+}
+
+.login-form .form-check {
+    margin: 0 0 35px 0;
+}
+
+input{
+    font-size: 18px;
+    margin: 0 0 15px 0;
+}
+
+form .form-group {
+    text-align: left;
+    margin: 0;
+    line-height: 26px;
+}
+
+.button.small {
+    font-size: 17px;
+    padding: 10px 0;
+    width: 200px;
+}
+
+.button.full-width {
+    width: unset;
+    padding: 10px 40px;
+}
+
+table {
+    display: table;
+}
+
+/*MAIN*/
+.main table {
+    margin: 0 auto;
+}
+
+td {
+    border: 1px solid;
+    padding: 8px 20px;
+}
+
+th {
+    border: 1px solid #0059a7;
+    border-right: 1px solid #ffffff;
+    background: #0059a7;
+    color: #ffffff;
+    padding: 8px 20px;
+}
+
+table th:last-child {
+    border-right: 1px solid #0059a7;
+}
+
+.main .button-kingdom {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 50px 0 0 0;
+}
