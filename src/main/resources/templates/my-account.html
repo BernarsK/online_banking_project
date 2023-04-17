@@ -2,10 +2,15 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>New Transaction</title>
+  <title>My account</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<main>
+<div class="container-middle">
+  <div class="text-center">
+  <div class="my-account-form">
   <h1>Change your account details</h1>
   <div id="change-account-details">
     <form th:action="@{/my-account-set-full-name}" th:object="${user}" method="post" class="mt-4">
@@ -49,5 +54,9 @@
       <p style="color: red" th:text="${error}"></p>
     </div>
   </div>
+  </div>
+    </div>
+</div>
+</main>
 </body>
 </html>
