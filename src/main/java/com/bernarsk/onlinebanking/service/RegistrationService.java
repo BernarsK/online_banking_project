@@ -27,9 +27,16 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
 
     public void saveUser(String email, String password, String name, String surname) {
-        if (userRepository.existsByEmail(email)){
-            throw RegistrationException.emailNotAvailable();//not enough balance
+        try{
+            checkPasswordStrength(password);
         }
+        catch (RegistrationException e){
+            throw e; //password too weak
+        }
+        if (userRepository.existsByEmail(email)){
+            throw RegistrationException.emailNotAvailable();//email already taken
+        }
+
         User user = new User(email, passwordEncoder.encode(password), name, surname);
         UUID userId = user.getId();
 
@@ -47,6 +54,35 @@ public class RegistrationService {
             createNewAccount(userId);
         }
     }
+
+    private void checkPasswordStrength(String password) {
+        // Check if password is at least 8 characters long
+        if (password.length() < 8) {
+            throw RegistrationException.passwordTooShortException();
+        }
+
+        // Check if password contains at least one uppercase letter, one lowercase letter, and one digit
+        boolean containsUppercase = false;
+        boolean containsLowercase = false;
+        boolean containsDigit = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                containsUppercase = true;
+            } else if (Character.isLowerCase(c)) {
+                containsLowercase = true;
+            } else if (Character.isDigit(c)) {
+                containsDigit = true;
+            }
+        }
+
+        if (!containsUppercase || !containsLowercase || !containsDigit) {
+            throw RegistrationException.passwordNotStrongEnoughException();
+        }
+
+        // Password is considered strong if it passes all the checks, so no exception is thrown.
+    }
+
     public String generateVerificationCode() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
