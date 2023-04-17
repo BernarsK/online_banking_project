@@ -55,7 +55,7 @@ public class RegistrationService {
         }
     }
 
-    private void checkPasswordStrength(String password) {
+    public static void checkPasswordStrength(String password) {
         // Check if password is at least 8 characters long
         if (password.length() < 8) {
             throw RegistrationException.passwordTooShortException();

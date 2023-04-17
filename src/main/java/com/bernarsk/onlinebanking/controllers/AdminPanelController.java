@@ -142,17 +142,17 @@ public class AdminPanelController {
             return "redirect:/adminView-user?userEmail="+email;
         }
     }
-    @PostMapping("/admin-view-account-change-email") String changeEmail(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String changedEmail) {
+    @PostMapping("/admin-view-account-change-email") String changeEmail(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String email) {
         User selectedUser = userService.findUserByEmail(userEmail);
         UUID userID = selectedUser.getId();
-        String email=selectedUser.getEmail();
+        String currentEmail=selectedUser.getEmail();
         try {
-            myAccountService.setEmail(userID, changedEmail, session);
+            myAccountService.setEmail(userID, email, session);
             return "redirect:/adminView-user?userEmail="+email;
         }
         catch (MyAccountException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/adminView-user?userEmail="+email;
+            return "redirect:/adminView-user?userEmail="+currentEmail;
         }
     }
     @PostMapping("/admin-view-account-change-password") String changePassword(@RequestParam("userEmail") String userEmail, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam String password1, @RequestParam String password2) {
@@ -168,7 +168,7 @@ public class AdminPanelController {
             myAccountService.changePassword(userID, password1, password, session);
             return "redirect:/adminView-user?userEmail="+email;
         }
-        catch (MyAccountException e){
+        catch (RuntimeException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/adminView-user?userEmail="+email;
         }

@@ -1,6 +1,7 @@
 package com.bernarsk.onlinebanking.service;
 
 import com.bernarsk.onlinebanking.exceptions.MyAccountException;
+import com.bernarsk.onlinebanking.exceptions.RegistrationException;
 import com.bernarsk.onlinebanking.exceptions.TransactionException;
 import com.bernarsk.onlinebanking.models.User;
 import com.bernarsk.onlinebanking.repositories.UserRepository;
@@ -48,7 +49,13 @@ public class MyAccountService {
     }
 
     public void changePassword(UUID userID, String password1, String password, HttpSession session) {
-
+        try {
+            RegistrationService.checkPasswordStrength(password1);
+        }
+        catch (RegistrationException e)
+        {
+            throw e;
+        }
         User user = userService.findUserById(userID);
         UUID logedInUserId = (UUID) session.getAttribute("UUID"); //logged in user id
         User loggedInUser = userService.findUserById(logedInUserId);
