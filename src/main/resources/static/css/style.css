@@ -310,3 +310,35 @@ body {
 .admin-view-user .al .divider {
     margin: 20px;
 }
+
+/*UNAPPROVED TRANSACTIONS*/
+.unap-trans .container-middle{
+    padding: 80px 30px;
+}
+
+.unap-trans .button {
+    padding: 5px;
+    margin: 0;
+    width: 150px;
+}
+
+.unap-trans td{
+    padding: 8px 35px;
+}
+
+.unap-trans .ha {
+    display: flex;
+    position: inline;
+    justify-content: center;
+    align-items: center;
+}
+
+.unap-trans .ha .divider {
+    margin: 20px;
+}
+
+.unap-trans .ha a {
+    margin: 0;
+    width: 200px;
+    padding: 16px 0;
+}

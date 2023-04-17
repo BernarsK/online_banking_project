@@ -7,9 +7,9 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main>
-<div class="container-fluid text-center">
-  <h1>Unapproved transaction</h1>
+<main class="unap-trans">
+<div class="container-middle text-center">
+  <h1>Unapproved transactions</h1>
   <table>
     <thead>
     <tr>
@@ -36,22 +36,26 @@
           <form th:action="@{/change-transaction-status}" method="post">
             <input type="hidden" name="transactionId" th:value="${transaction.id}" />
             <input type="hidden" name="statusValue" th:value=1 />
-            <button type="submit">Approve</button>
+            <button type="submit" class="button transparent">Approve</button>
           </form>
         </td>
         <td>
           <form th:action="@{/change-transaction-status}" method="post">
             <input type="hidden" name="transactionId" th:value="${transaction.id}" />
             <input type="hidden" name="statusValue" th:value=2 />
-            <button type="submit">Cancel</button>
+            <button type="submit" class="button transparent">Cancel</button>
           </form>
         </td>
       </tr>
     </th:block>
     </tbody>
   </table>
-  <a th:href="@{/home}">Home</a></br>
-  <a href="/admin-panel">Admin panel</a></br>
+  <br>
+  <div class="ha">
+  <a th:href="@{/home}" class="button transparent">Home</a></br>
+    <div class="divider"></div>
+  <a href="/admin-panel" class="button transparent">Admin panel</a></br>
+</div>
   <p style="color: red" th:text="${error}"></p></br>
 </div>
 </main>
