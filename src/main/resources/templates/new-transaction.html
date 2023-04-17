@@ -11,20 +11,29 @@
 <div class="container-middle">
   <h1 class="mt-5">New transaction</h1>
   <form th:object="${transaction}" th:action="@{/new-transaction}" method="post">
-      <label for="accountFrom">Sender account:</label>
+      <label for="accountFrom">Sender account:</label> <br>
+    <div class="form-group">
       <select id="accountFrom" name="accountFrom">
         <th:block th:each="account : ${accounts}">
           <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
         </th:block>
       </select><br><br>
-    <label for="accountTo">Receiver account:</label>
+    </div>
+
+    <label for="accountTo">Receiver account:</label><br>
+    <div class="form-group">
     <input type="text" id="accountTo" name="accountTo" maxlength="21" th:field="*{accountTo}" required><br><br>
+    </div>
 
-    <label for="amount">Amount:</label>
+    <label for="amount">Amount:</label> <br>
+    <div class="form-group">
     <input type="number" min="0.01" step="0.01" id="amount" name="amount" th:field="*{amount}" required><br><br>
+    </div>
 
-    <label for="reference">Description:</label>
+    <label for="reference">Description:</label> <br>
+    <div class="form-group">
     <input type="text" id="reference" name="reference" th:field="*{reference}" required><br><br>
+    </div>
 
     <input class="button transparent" type="submit" value="Submit">
     <a class="button transparent" th:href="@{/home}">Home</a>

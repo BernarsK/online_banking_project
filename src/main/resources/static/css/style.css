@@ -78,6 +78,9 @@ h1 {
     margin: 120px 0;
 }
 
+select {
+    width: 100%;
+}
 /*LOGIN PAGE*/
 .login-form {
     width: 650px;
@@ -90,6 +93,7 @@ h1 {
 input{
     font-size: 18px;
     margin: 0 0 15px 0;
+    width: 100%;
 }
 
 form .form-group {
@@ -156,7 +160,9 @@ body {
 }
 
 /*NEW TRANSACTION*/
-
+.new-trans h1 {
+    text-align: center;
+}
 /*MY ACCOUNT*/
 .my-account .button{
     margin: 0;
