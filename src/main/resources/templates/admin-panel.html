@@ -7,28 +7,29 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main>
-<div class="container-fluid text-center">
+<main class="admin-panel">
+<div class="container-middle">
   <h1>Admin panel</h1>
   <form method="get" action="/adminView-user">
     <label for="userEmail">User e-mail</label>
     <input type="text" id="userEmail" name="userEmail" required>
-    <button type="submit">View user</button><br><br>
+    <button type="submit" class="button transparent">View user</button><br><br>
   </form>
   <form method="get" action="/view-account-transactions">
     <label for="selectedAccount">User account number</label>
     <input type="text" id="selectedAccount" name="selectedAccount" required>
-    <button type="submit">View transactions</button><br><br>
+    <button type="submit" class="button transparent">View transactions</button><br>
   </form>
 
   <form method="get" action="/adminView-unapprovedTransactions">
-    <button type="submit">View unapproved transactions</button><br><br>
+    <button type="submit" class="button transparent">View unapproved transactions</button><br>
   </form>
-
-  <a th:href="@{/home}">Home
-  <a th:href="@{/logout}">Logout</a>
+<div class="hl">
+  <a th:href="@{/home}" class="button transparent">Home</a>
+  <div class="divider"></div>
+  <a th:href="@{/logout}" class="button transparent">Logout</a>
+</div>
   <p style="color: red" th:text="${error}"></p>
-  </a>
 </div>
 </main>
 </body>

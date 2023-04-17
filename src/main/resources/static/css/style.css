@@ -220,6 +220,24 @@ body {
     margin-bottom: 40px;
 }
 
+/*ADMIN PANEL*/
+.admin-panel {
+    width: 650px;
+}
+
+.admin-panel .button {
+    display: block;
+    margin: auto;
+}
+
+.admin-panel .hl {
+    display: flex;
+    position: inline;
+}
+
+.admin-panel .hl .divider {
+    margin: 40px;
+}
 
 
 
