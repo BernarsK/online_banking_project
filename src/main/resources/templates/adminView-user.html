@@ -7,8 +7,8 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main>
-<div class="container-fluid text-center">
+<main class="admin-view-user">
+<div class="text-center admin-user-info">
   <p>User level is: <span th:text="${user.userLevel}"></span></p>
   <p>User ID is: <span th:text="${user.id}"></span></p>
   <h1>User accounts:</h1>
@@ -29,6 +29,7 @@
     </tbody>
   </table>
 </div>
+  <div class="change-user-details">
 <h1>Change user account details</h1>
 <div id="change-account-details">
   <form th:action="@{/admin-view-account-set-full-name}" th:object="${user}" method="post" class="mt-4">
@@ -42,7 +43,7 @@
       <label for="surname">Surname:</label>
       <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
     </div>
-    <button type="submit" class="btn btn-primary">Set name and surname</button>
+    <button type="submit" class="button transparent" style="width:250px">Set name and surname</button>
   </form>
   <form th:action="@{/admin-view-account-change-email}" th:object="${user}" method="post" class="mt-4">
     <div class="form-group">
@@ -50,7 +51,7 @@
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" th:field="*{email}" required>
     </div>
-    <button type="submit" class="btn btn-primary">Set email</button>
+    <button type="submit" class="button transparent">Set email</button>
   </form>
   <form th:action="@{/admin-view-account-change-password}" th:object="${user}" method="post" class="mt-4">
     <div class="form-group">
@@ -66,14 +67,19 @@
 
 
 
-    <button type="submit" class="btn btn-primary">Change password</button>
+    <button type="submit" class="button transparent">Change password</button>
   </form>
   <div th:if="${error}">
     <p style="color: red" th:text="${error}"></p>
   </div>
 </div>
-<a th:href="@{/admin-panel}">Admin panel</a>
-<a th:href="@{/home}">Logout</a>
+    <br>
+    <div class="al">
+<a th:href="@{/admin-panel}" class="button transparent">Admin panel</a>
+      <div class="divider"></div>
+<a th:href="@{/home}" class="button transparent">Logout</a>
+  </div>
+  </div>
 </main>
 </body>
 </html>
