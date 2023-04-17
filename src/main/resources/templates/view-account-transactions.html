@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <title>View Account Transactions</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<main>
 <div class="container-fluid text-center">
   <h1>View Account Transactions</h1>
   <h2>Account Number: <span th:text="${selectedAccount}"></span></h2>
@@ -75,5 +77,6 @@
   <a th:href="@{/home}">Home</a></br>
   <a href="/view-accounts">Back to Accounts</a>
 </div>
+</main>
 </body>
 </html>

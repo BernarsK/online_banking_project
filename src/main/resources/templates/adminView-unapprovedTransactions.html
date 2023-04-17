@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <title>(Admin) View Unapproved Transactions</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
+<main>
 <div class="container-fluid text-center">
   <h1>Unapproved transaction</h1>
   <table>
@@ -52,5 +54,6 @@
   <a href="/admin-panel">Admin panel</a></br>
   <p style="color: red" th:text="${error}"></p></br>
 </div>
+</main>
 </body>
 </html>

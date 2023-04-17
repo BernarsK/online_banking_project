@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <title>New Transaction</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="container-fluid text-center">
+<main class="new-trans">
+<div class="container-middle">
   <h1 class="mt-5">New transaction</h1>
   <form th:object="${transaction}" th:action="@{/new-transaction}" method="post">
       <label for="accountFrom">Sender account:</label>
@@ -24,9 +26,11 @@
     <label for="reference">Description:</label>
     <input type="text" id="reference" name="reference" th:field="*{reference}" required><br><br>
 
-    <input type="submit" value="Submit">
+    <input class="button transparent" type="submit" value="Submit">
+    <a class="button transparent" th:href="@{/home}">Home</a>
   </form>
   <p style="color: red" th:text="${error}"></p>
 </div>
+</main>
 </body>
 </html>

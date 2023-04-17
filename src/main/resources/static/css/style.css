@@ -3,6 +3,10 @@
     position: relative;
 }
 
+a {
+    text-align: center;
+}
+
 title {
     display: none;
 }
@@ -145,3 +149,14 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+
+/*NEW TRANSACTION*/
+
+/*MY ACCOUNT*/
+.my-account .button{
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+

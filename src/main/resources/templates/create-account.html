@@ -4,19 +4,23 @@
   <meta charset="UTF-8">
   <title>JavaVault Banking | Create a New Account</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="container-fluid text-center">
+<main>
+<div class="container-middle">
+  <h2>Create a new account</h2>
   <form th:action="@{/create-account}" th:object="${account}" method="post" class="mt-4">
     <label>Account Type:</label>
     <select th:field="*{accountType}" required>
       <option th:each="type : ${T(com.bernarsk.onlinebanking.models.Account).ACCOUNT_TYPES}" th:value="${type}" th:text="${type}"></option>
     </select>
     <br />
-    <button type="submit" class="btn btn-primary">Create new account</button>
+    <button type="submit" class="button">Create new account</button>
   </form>
+  <a class="button transparent" th:href="@{/home}">Home</a>
 
-  <a th:href="@{/logout}">Logout</a>
 </div>
+</main>
 </body>
 </html>
