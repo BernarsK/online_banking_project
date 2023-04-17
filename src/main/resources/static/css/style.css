@@ -29,6 +29,7 @@ h1.landing {
 h1 {
     text-transform: uppercase;
     margin: 0 0 40px 0;
+    text-align: center;
 }
 
 .button {
@@ -160,9 +161,7 @@ body {
 }
 
 /*NEW TRANSACTION*/
-.new-trans h1 {
-    text-align: center;
-}
+
 /*MY ACCOUNT*/
 .my-account .button{
     margin: 0;
@@ -170,4 +169,16 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
+
+/*VIEW ACCOUNTS*/
+.view-accounts {
+    width: 650px;
+}
+
+.view-accounts select {
+    margin-bottom: 40px;
+}
+
+
+
 
