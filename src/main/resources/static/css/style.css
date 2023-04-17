@@ -119,7 +119,7 @@ table {
 }
 
 /*MAIN*/
-.main table {
+table {
     margin: 0 auto;
     border-radius: 16px;
     background-color: rgba(255, 255, 255, 0.7);
@@ -239,5 +239,36 @@ body {
     margin: 40px;
 }
 
+/*VIEW ACCOUNT TRANSACTIONS*/
 
+.view-acc-trans .ha {
+    display: flex;
+    position: inline;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-acc-trans input{
+    width: 450px;
+}
+
+.view-acc-trans select{
+    width: 450px;
+}
+
+.view-acc-trans .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-acc-trans .center .button {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+.view-acc-trans h2 {
+    text-align: center;
+}
 

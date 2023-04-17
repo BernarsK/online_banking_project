@@ -7,12 +7,12 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<main>
-<div class="container-fluid text-center">
+<main class="view-acc-trans">
+<div class="container-middle">
   <h1>View Account Transactions</h1>
   <h2>Account Number: <span th:text="${selectedAccount}"></span></h2>
 
-
+<div class="center">
   <form method="get">
     <div class="mb-3">
       <label for="startDate" class="form-label">Start Date:</label>
@@ -36,9 +36,10 @@
       <input type="text" class="form-control" id="reference" name="reference" th:value="${reference}">
     </div>
     <input type="hidden" name="selectedAccount" th:value="${selectedAccount}" />
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="button transparent">Filter</button>
+    <br>
   </form>
-
+</div>
 
   <table>
     <thead>
@@ -74,8 +75,11 @@
     </th:block>
     </tbody>
   </table>
-  <a th:href="@{/home}">Home</a></br>
-  <a href="/view-accounts">Back to Accounts</a>
+  <br>
+  <div class="ha">
+  <a th:href="@{/home}" class="button transparent">Home</a></br>
+  <a href="/view-accounts" class="button transparent">Back to Accounts</a>
+  </div>
 </div>
 </main>
 </body>
