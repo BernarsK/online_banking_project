@@ -65,24 +65,5 @@ public class LoginController {
             model.addAttribute("error", "Invalid username or password!");
             return "login";
         }
-
-
-
-
-//        // check if email exists
-//        if (isEmailExists(email)) {
-//            // if email is correct, check password
-//            if (!user.getPassword().equals(password)) {
-//                model.addAttribute("error", "Incorrect password");
-//                return "login";
-//            } else {
-//                // add logic to log-in user (session)
-//            }
-//        } else {
-//            // if email is not in database, return error
-//            model.addAttribute("error", "Email address is not registered!");
-//            return "login";
-//        }
-//        return "redirect:/login-success";
     }
 }

@@ -19,4 +19,8 @@ public class MyAccountException extends RuntimeException{
     public static MyAccountException emailAlreadyUsed() {
         return new MyAccountException("Email already connected to different account");
     }
+
+    public static MyAccountException userNotLogedIn() {
+        return new MyAccountException("User not logged in");
+    }
 }
