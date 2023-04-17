@@ -16,13 +16,11 @@
 <!--  <p>Your user ID is: <span th:text="${userId}"></span></p>-->
   <h1>Your accounts:</h1>
   <table>
-    <thead>
     <tr>
       <th>Account Number</th>
       <th>Balance</th>
       <th>Account Type</th>
     </tr>
-    </thead>
     <tbody>
     <tr th:each="account : ${accounts}">
       <td th:text="${account.accountNumber}"></td>

@@ -121,6 +121,42 @@ table {
 /*MAIN*/
 .main table {
     margin: 0 auto;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th {
+    border-bottom: 2px solid #8E8E8E;
+    padding: 8px 50px;
+}
+
+td {
+    padding: 8px 50px;
+}
+
+tr {
+    border-bottom: 1px solid #ACACAC;
+}
+
+tr:last-child {
+    border: none;
+}
+
+/*
+tr:hover th, tr:hover td {
+    background-color: rgba(175, 175, 200, 1);
+    transition: .3s ease;
+}
+
+tr:hover th {
+   border-radius: 16px 6px 6px 16px;
+}
+
+tr:hover td:last-child {
+   border-radius: 6px 16px 16px 6px;
 }
 
 td {
@@ -139,7 +175,7 @@ th {
 table th:last-child {
     border-right: 1px solid #0059a7;
 }
-
+*/
 .main .button-kingdom {
     display: flex;
     align-content: center;
