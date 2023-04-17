@@ -16,4 +16,7 @@ public class MyAccountException extends RuntimeException{
     public static MyAccountException passwordError() {
         return new MyAccountException("Wrong old password");
     }
+    public static MyAccountException emailAlreadyUsed() {
+        return new MyAccountException("Email already connected to different account");
+    }
 }

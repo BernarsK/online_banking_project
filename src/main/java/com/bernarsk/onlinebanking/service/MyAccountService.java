@@ -44,8 +44,12 @@ public class MyAccountService {
         if (loggedInUser.getUserLevel()!=1 && logedInUserId != userID) {//throws exception if loged in user is not admin and tries to change other users data
             throw MyAccountException.accessError();
         }
-        user.setEmail(email);
-        userRepository.save(user);
+        if (userService.findUserIdByEmail(email)==null){
+            user.setEmail(email);
+            userRepository.save(user);
+        }
+        else throw MyAccountException.emailAlreadyUsed(); //throws exception if email already used
+
     }
 
     public void changePassword(UUID userID, String password1, String password, HttpSession session) {
