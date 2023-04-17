@@ -38,7 +38,6 @@ public class User {
 
     public User(String email, String password, String name, String surname) {
         this.id = UUID.randomUUID();
-        System.out.println(this.id);
         this.email = email;
         this.password = password;
         this.name = name;

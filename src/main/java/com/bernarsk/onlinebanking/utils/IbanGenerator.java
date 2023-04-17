@@ -12,13 +12,11 @@ public class IbanGenerator {
         BigInteger accountNumber = new BigInteger(maxLimit.bitLength(), new Random());
         accountNumber = accountNumber.mod(maxLimit);
         String accountNumberString = String.format("%013d", accountNumber);
-        System.out.println(accountNumber);
         Iban iban = new Iban.Builder()
                 .countryCode(CountryCode.LV)
                 .bankCode("JAVT")
                 .accountNumber(accountNumberString)
                 .build();
-        System.out.println(iban.toString());
         return iban.toString();
     }
 }

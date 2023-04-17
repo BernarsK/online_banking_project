@@ -8,7 +8,7 @@ public class RegistrationException extends RuntimeException {
         return new RegistrationException("Email already registered");
     }
     public static RegistrationException passwordTooShortException() {
-        return new RegistrationException("Pasword must be atleast 8 characters long");
+        return new RegistrationException("Password must be at least 8 characters long");
     }
 
     public static RegistrationException passwordNotStrongEnoughException() {

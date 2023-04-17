@@ -43,7 +43,6 @@ public class ForgotPasswordService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        System.out.println(generatedString);
         return generatedString;
     }
 

@@ -41,7 +41,6 @@ public class HomeController {
         model.addAttribute("userId", userId);
 
         List<Account> accounts = accountService.getAllAccountsForUser(userId);
-        System.out.println(accounts);
         model.addAttribute("accounts", accounts);
         model.addAttribute("user", logedInUser);
 
