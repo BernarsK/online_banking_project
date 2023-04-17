@@ -26,6 +26,9 @@ public class MyAccountService {
         if (user==null){
             throw MyAccountException.userNotFoundException();
         }
+        if (loggedInUser==null){
+            throw MyAccountException.userNotLogedIn();
+        }
         if (loggedInUser.getUserLevel()!=1 && logedInUserId != userID) {//throws exception if loged in user is not admin and tries to change other users data
             throw MyAccountException.accessError();
         }
@@ -40,6 +43,9 @@ public class MyAccountService {
         User loggedInUser = userService.findUserById(logedInUserId);
         if (user==null){
             throw MyAccountException.userNotFoundException();
+        }
+        if (loggedInUser==null){
+            throw MyAccountException.userNotLogedIn();
         }
         if (loggedInUser.getUserLevel()!=1 && logedInUserId != userID) {//throws exception if loged in user is not admin and tries to change other users data
             throw MyAccountException.accessError();
@@ -61,10 +67,14 @@ public class MyAccountService {
             throw e;
         }
         User user = userService.findUserById(userID);
+
         UUID logedInUserId = (UUID) session.getAttribute("UUID"); //logged in user id
         User loggedInUser = userService.findUserById(logedInUserId);
         if (user==null){
             throw MyAccountException.userNotFoundException();
+        }
+        if (loggedInUser==null){
+            throw MyAccountException.userNotLogedIn();
         }
         if (loggedInUser.getUserLevel()!=1 && logedInUserId != userID) {//throws exception if loged in user is not admin and tries to change other users data
             throw MyAccountException.accessError();
@@ -73,6 +83,7 @@ public class MyAccountService {
             throw MyAccountException.passwordError();
         }
         user.setPassword(passwordEncoder.encode(password1));
+
         userRepository.save(user);
     }
 }
