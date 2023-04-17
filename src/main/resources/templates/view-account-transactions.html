@@ -26,8 +26,8 @@
       <label for="status" class="form-label">Status:</label>
       <select class="form-select" id="status" name="status">
         <option value="">All</option>
-        <option value=1 th:selected="${status == 1}">Pending</option>
-        <option value=0 th:selected="${status == 0}">Approved</option>
+        <option value=0 th:selected="${status == 0}">Pending</option>
+        <option value=1 th:selected="${status == 1}">Approved</option>
         <option value=2 th:selected="${status == 2}">Canceled</option>
       </select>
     </div>
@@ -62,10 +62,10 @@
         <td th:text="${transaction.amount}"></td>
         <td th:text="${transaction.date}"></td>
         <td th:text="${transaction.reference}"></td>
-        <div th:if="${transaction.statusApproved == 0}">
+        <div th:if="${transaction.statusApproved == 1}">
           <td>APPROVED</td>
         </div>
-        <div th:if="${transaction.statusApproved == 1}">
+        <div th:if="${transaction.statusApproved == 0}">
           <td>PENDING</td>
         </div>
         <div th:if="${transaction.statusApproved == 2}">
