@@ -4,35 +4,36 @@
   <meta charset="UTF-8">
   <title>Online Banking | Login or Register</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="register-form">
-  <h1 class="mt-5">User Registration</h1>
+<main>
+  <div class="container-middle">
+    <div class="register-form">
+      <h1 class="mt-5">User Registration</h1>
 
-  <form th:action="@{/register}" th:object="${user}" method="post" class="mt-4">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name" th:field="*{name}" required>
+      <form th:action="@{/register}" th:object="${user}" method="post" class="mt-4">
+        <div class="form-group">
+          <input type="text" placeholder="Name" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" placeholder="Surname" class="form-control" id="surname" th:field="*{surname}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" placeholder="Email" class="form-control" id="email" th:field="*{email}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="password" placeholder="Password" class="form-control" id="password" th:field="*{password}" required>
+        </div>
+
+        <button type="submit" class="button small">Register</button>
+      </form>
+      <p style="color: red" th:text="${error}"></p>
     </div>
-
-    <div class="form-group">
-      <label for="surname">Surname:</label>
-      <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" th:field="*{email}" required>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" class="form-control" id="password" th:field="*{password}" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-  <p style="color: red" th:text="${error}"></p>
-</div>
+  </div>
+</main>
 </body>
 </html>
