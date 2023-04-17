@@ -272,3 +272,41 @@ body {
     text-align: center;
 }
 
+/*ADMIN VIEW USER*/
+.admin-view-user .admin-user-info{
+    padding: 80px 100px;
+    border-radius: 16px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color: #58738b;
+    opacity: 0.8;
+    float: left;
+    margin-left: 10%;
+}
+
+.admin-view-user .change-user-details {
+    padding: 50px 80px;
+    border-radius: 16px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color: #58738b;
+    opacity: 0.8;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+#change-account-details {
+    width: 500px;
+}
+
+.admin-view-user .change-user-details .button{
+    margin: 0;
+    padding: 10px;
+}
+
+.admin-view-user .al {
+    display: flex;
+    position: inline;
+}
+
+.admin-view-user .al .divider {
+    margin: 20px;
+}
