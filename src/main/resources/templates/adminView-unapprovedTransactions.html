@@ -43,7 +43,7 @@
           <form th:action="@{/change-transaction-status}" method="post">
             <input type="hidden" name="transactionId" th:value="${transaction.id}" />
             <input type="hidden" name="statusValue" th:value=2 />
-            <button type="submit" class="button transparent">Cancel</button>
+            <button type="submit" class="button transparent red">Cancel</button>
           </form>
         </td>
       </tr>
@@ -54,7 +54,7 @@
   <div class="ha">
   <a th:href="@{/home}" class="button transparent">Home</a></br>
     <div class="divider"></div>
-  <a href="/admin-panel" class="button transparent">Admin panel</a></br>
+  <a href="/admin-panel" class="button transparent blue">Admin panel</a></br>
 </div>
   <p style="color: red" th:text="${error}"></p></br>
 </div>

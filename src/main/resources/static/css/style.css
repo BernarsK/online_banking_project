@@ -353,3 +353,7 @@ body {
     color: #CA135E;
     border-color: #CA135E;
 }
+
+.button.small.cen {
+    margin-left: 23%;
+}
