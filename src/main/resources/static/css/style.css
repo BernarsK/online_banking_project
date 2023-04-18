@@ -52,7 +52,7 @@ h1 {
 
 .button.transparent {
     color: #2ca700;
-    background-color: transparent;
+    background-color: white;
     border: 2px solid #2ca700;
 }
 
@@ -201,7 +201,6 @@ body {
 /*MY ACCOUNT*/
 .my-account .button{
     margin: 0;
-    position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
