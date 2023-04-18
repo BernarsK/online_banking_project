@@ -119,6 +119,9 @@ table {
     display: table;
 }
 
+.login-form .cen {
+    margin-left: 20%;
+}
 /*MAIN*/
 table {
     margin: 0 auto;
@@ -302,6 +305,7 @@ body {
 
 .admin-view-user .al {
     display: flex;
+    margin-left: 20%;
 }
 
 .admin-view-user .al .divider {
