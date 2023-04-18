@@ -357,3 +357,27 @@ body {
 .button.small.cen {
     margin-left: 23%;
 }
+
+table tbody tr:hover td {
+   background-color: rgba(175, 175, 200, 0.5);
+   cursor:pointer;
+   transition: 0.3s;
+}
+
+table tbody tr:hover td.border-left {
+    -moz-border-radius: 16px 0 0 16px;
+    -webkit-border-radius: 16px 0 0 16px;
+    -khtml-border-radius: 16px 0 0 16px;
+    border-radius: 16px 0 0 16px;
+}
+
+table tbody tr:hover td.border-right {
+    -moz-border-radius: 0 16px 16px 0;
+    -webkit-border-radius: 0 16px 16px 0;
+    -khtml-border-radius: 0 16px 16px 0;
+    border-radius: 0 16px 16px 0;
+}
+
+.button.transparent:hover {
+    color: black;
+}
