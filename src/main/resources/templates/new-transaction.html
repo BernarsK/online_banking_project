@@ -17,25 +17,25 @@
         <th:block th:each="account : ${accounts}">
           <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
         </th:block>
-      </select><br><br>
+      </select>
     </div>
 
     <label for="accountTo">Receiver account:</label><br>
     <div class="form-group">
-    <input type="text" id="accountTo" name="accountTo" maxlength="21" th:field="*{accountTo}" required><br><br>
+    <input type="text" id="accountTo" class="form-control" name="accountTo" maxlength="21" th:field="*{accountTo}" required>
     </div>
 
     <label for="amount">Amount:</label> <br>
     <div class="form-group">
-    <input type="number" min="0.01" step="0.01" id="amount" name="amount" th:field="*{amount}" required><br><br>
+    <input type="number" min="0.01" class="form-control" step="0.01" id="amount" name="amount" th:field="*{amount}" required>
     </div>
 
     <label for="reference">Description:</label> <br>
     <div class="form-group">
-    <input type="text" id="reference" name="reference" th:field="*{reference}" required><br><br>
+    <input type="text" id="reference" class="form-control" name="reference" th:field="*{reference}" required>
     </div>
 
-    <input class="button transparent" type="submit" value="Submit">
+    <input class="button" type="submit" value="Submit">
     <a class="button transparent" th:href="@{/home}">Home</a>
   </form>
   <p style="color: red" th:text="${error}"></p>
