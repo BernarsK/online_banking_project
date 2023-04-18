@@ -35,14 +35,14 @@ h1 {
 .button {
     text-decoration: none;
     color: #ffffff;
-    background-color: #2ca700;
+    background-color: #5ECA13;
     text-transform: uppercase;
     font-size: 18px;
     padding: 16px 0;
     width: 200px;
     display: inline-block;
     margin: 0 10px 20px 10px;
-    border: 2px solid #2ca700;
+    border: 2px solid #5ECA13;
     transition: .3s ease;
     border-radius: 10px;
 }
@@ -52,9 +52,9 @@ h1 {
 }
 
 .button.transparent {
-    color: #2ca700;
+    color: #5ECA13;
     background-color: white;
-    border: 2px solid #2ca700;
+    border: 2px solid #5ECA13;
 }
 
 .logo {
@@ -120,7 +120,7 @@ table {
 }
 
 .login-form .cen {
-    margin-left: 20%;
+    margin-left: 15%;
 }
 /*MAIN*/
 table {
@@ -341,4 +341,15 @@ body {
     margin: 0;
     width: 200px;
     padding: 16px 0;
+}
+
+/*MISC*/
+.button.transparent.blue {
+    color: #135ECA;
+    border-color: #135ECA;
+}
+
+.button.transparent.red{
+    color: #CA135E;
+    border-color: #CA135E;
 }
