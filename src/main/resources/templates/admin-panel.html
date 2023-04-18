@@ -12,13 +12,13 @@
   <h1>Admin panel</h1>
   <form method="get" action="/adminView-user">
     <label for="userEmail">User e-mail</label>
-    <input type="text" id="userEmail" name="userEmail" required>
-    <button type="submit" class="button transparent">View user</button><br><br>
+    <input type="text" id="userEmail" name="userEmail" class="form-control" required>
+    <button type="submit" class="button">View user</button><br><br>
   </form>
   <form method="get" action="/view-account-transactions">
     <label for="selectedAccount">User account number</label>
-    <input type="text" id="selectedAccount" name="selectedAccount" required>
-    <button type="submit" class="button transparent">View transactions</button><br>
+    <input type="text" id="selectedAccount" name="selectedAccount" class="form-control" required>
+    <button type="submit" class="button">View transactions</button><br>
   </form>
 
   <form method="get" action="/adminView-unapprovedTransactions">

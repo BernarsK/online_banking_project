@@ -44,6 +44,7 @@ h1 {
     margin: 0 10px 20px 10px;
     border: 2px solid #2ca700;
     transition: .3s ease;
+    border-radius: 10px;
 }
 
 .button:hover {
@@ -231,7 +232,6 @@ body {
 
 .admin-panel .hl {
     display: flex;
-    position: inline;
 }
 
 .admin-panel .hl .divider {
@@ -242,7 +242,6 @@ body {
 
 .view-acc-trans .ha {
     display: flex;
-    position: inline;
     justify-content: center;
     align-items: center;
 }
@@ -293,7 +292,7 @@ body {
 }
 
 #change-account-details {
-    width: 500px;
+    width: 650px;
 }
 
 .admin-view-user .change-user-details .button{
@@ -303,7 +302,6 @@ body {
 
 .admin-view-user .al {
     display: flex;
-    position: inline;
 }
 
 .admin-view-user .al .divider {
@@ -327,7 +325,6 @@ body {
 
 .unap-trans .ha {
     display: flex;
-    position: inline;
     justify-content: center;
     align-items: center;
 }

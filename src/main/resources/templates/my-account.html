@@ -21,14 +21,14 @@
         <label for="surname">Surname:</label>
         <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
       </div>
-      <button type="submit" class="button transparent">Set name and surname</button>
+      <button type="submit" class="button" style="width: 250px">Set name and surname</button>
     </form>
     <form th:action="@{/my-account-change-email}" th:object="${user}" method="post" class="mt-4">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" class="form-control" id="email" th:field="*{email}" required>
       </div>
-      <button type="submit" class="button transparent">Set email</button>
+      <button type="submit" class="button">Set email</button>
     </form>
     <form th:action="@{/my-account-change-password}" th:object="${user}" method="post" class="mt-4">
       <div class="form-group">
@@ -46,8 +46,10 @@
         <input type="password" class="form-control" id="password" th:field="*{password}" required>
       </div>
 
-      <button type="submit" class="button transparent">Change password</button>
-      <a class="button" th:href="@{/home}">Home</a>
+      <button type="submit" class="button">Change password</button>
+      <br>
+      <br>
+      <a class="button transparent" th:href="@{/home}">Home</a>
     </form>
     <div th:if="${error}">
       <p style="color: red" th:text="${error}"></p>
